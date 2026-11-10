@@ -238,10 +238,10 @@ section{padding:clamp(80px,12vw,170px) var(--rand)}
 @media(max-width:520px){.foto figcaption small{display:none}.foto .lupe{top:8px;right:8px;width:32px;height:32px}}
 
 /* Lightbox */
-.lb{position:fixed;inset:0;z-index:200;display:grid;grid-template-rows:1fr auto;background:rgba(5,5,5,.94);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.lb{position:fixed;inset:0;z-index:200;display:grid;grid-template-rows:minmax(0,1fr) auto;background:rgba(5,5,5,.94);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
 .lb.on{opacity:1;visibility:visible}
 .lb figure{margin:0;display:grid;place-items:center;padding:clamp(56px,7vw,84px) clamp(12px,6vw,96px) 8px;min-height:0}
-.lb img{max-width:100%;max-height:100%;object-fit:contain;display:block;box-shadow:0 30px 80px rgba(0,0,0,.7);border:1px solid rgba(201,162,74,.35);transition:opacity .3s}
+.lb img{max-width:100%;max-height:calc(100vh - 250px);max-height:calc(100dvh - 250px);object-fit:contain;display:block;box-shadow:0 30px 80px rgba(0,0,0,.7);border:1px solid rgba(201,162,74,.35);transition:opacity .3s}
 .lb img.wechsel{opacity:0}
 .lb .unter{padding:6px 20px clamp(18px,3vw,34px);text-align:center}
 .lb .unter b{display:block;font:500 clamp(1.3rem,2.2vw,1.8rem)/1.2 var(--serif);color:var(--gold-hell)}
@@ -804,7 +804,6 @@ footer .klein span{margin-right:auto}
   <div class="schmal">
     <div class="kopfzeile">
       <h2>Aus unserer <span class="gold">Küche.</span></h2>
-      <p>Was bei uns auf den Tisch kommt, frisch zubereitet und im Kerzenlicht serviert.</p>
     </div>
     <div class="raster">
       <figure class="foto f1"><button type="button" class="auf" data-i="0" data-gross="foto/galerie/01-pizza-rustico-1920.webp" data-t="Pizza" data-k="Pizza" data-d="" aria-label="Rustico (Pizza), Foto vergrößern"><img src="foto/galerie/01-pizza-rustico-1280.webp" width="1280" height="720" alt="Pizza Rustico mit Rucola, Kirschtomaten und Grana Padano" loading="lazy" decoding="async"></button><span class="lupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span><figcaption>Pizza</figcaption></figure>
