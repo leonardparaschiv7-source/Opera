@@ -1,0 +1,21 @@
+# Fișiere nefolosite de site (rămân pe disc, nu se publică)
+art/eis.webp
+art/fisch.webp
+art/olive.webp
+art/pizza.webp
+foto/abend.webp
+foto/flammkuchen.webp
+foto/lachs.webp
+foto/schnitzel.webp
+foto/tiramisu.webp
+foto/ziegenkaese.webp
+foto/galerie/07-orata-alla-mediterranea-*.webp
+logo/opera-foot.webp
+video/koch.*
+video/orata.mp4
+video/orata.jpg
+
+# Scripturi de lucru unice și backup (nu fac parte din site)
+karte/*-patch.py
+karte/ungenutzt.py
+karte/index.src.ORIGINAL.html

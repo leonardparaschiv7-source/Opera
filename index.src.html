@@ -1,0 +1,1090 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opera Pforzheim</title>
+<meta name="description" content="Opera, Restaurant und Pizzeria in Pforzheim: italienische Küche, Pasta, Pizza, Fleisch und Fisch in der Altstadt. Jetzt Tisch reservieren.">
+<meta name="theme-color" content="#080808">
+<link rel="icon" type="image/webp" href="logo/opera-nav.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --nacht:#080808;      /* Saal im Dunkeln */
+  --samt:#151515;       
+  --samt-hell:#262626;
+  --gold:#c9a24a;       /* aus dem Logo */
+  --gold-hell:#ecd596;
+  --elfenbein:#f2e9d8;
+  --dampf:#b9aa94;      /* gedämpfter Text */
+  --serif:"Cormorant",Georgia,serif;
+  --sans:"Figtree",system-ui,sans-serif;
+  --rand:clamp(20px,5vw,72px);
+  --h:min(max(430px,calc(100svh - 246px)),64vw,920px); --w:calc(var(--h)*.72);
+  --papier:#f1e8d4; --tinte:#1b1712; --gold-tief:#8a6a1f;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--nacht);color:var(--elfenbein);font:400 17px/1.7 var(--sans);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--gold-hell);outline-offset:4px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.05;letter-spacing:-.01em}
+h2{font-size:clamp(2.4rem,5.5vw,4.4rem)}
+.gold{background:linear-gradient(100deg,var(--gold) 0%,var(--gold-hell) 45%,var(--gold) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* Navigation */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px var(--rand);transition:background .4s,padding .4s}
+.nav:not(.solid){background:none;border:0}
+.nav.solid{background:rgba(8,8,8,.88);backdrop-filter:blur(10px);padding-block:10px;border-bottom:1px solid rgba(201,162,74,.18)}
+.nav img{height:112px;width:auto;transition:height .4s;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))}
+.nav.solid img{height:68px}
+.nav ul{margin-left:clamp(28px,4.5vw,72px);display:flex;gap:clamp(22px,3.4vw,48px);list-style:none;padding:0;font-size:1.02rem;font-weight:500;letter-spacing:.05em;text-shadow:0 1px 3px rgba(0,0,0,.6),0 2px 18px rgba(0,0,0,.7)}
+.nav ul a{color:#fff;transition:color .2s;white-space:nowrap}
+.nav ul a:hover{color:var(--gold-hell)}
+.btn{display:inline-block;padding:.85em 1.8em;border:1px solid var(--gold);color:var(--gold-hell);font-weight:500;letter-spacing:.06em;transition:background .25s,color .25s}
+.btn:hover{background:var(--gold);color:var(--nacht)}
+.btn.voll{background:var(--gold);color:var(--nacht)}
+.btn.voll:hover{background:var(--gold-hell)}
+@media(max-width:820px){.nav ul{display:none}}
+@media(max-width:1180px){.nav ul{gap:18px;margin:0 22px 0 24px;font-size:.92rem}.nav .soz a:nth-child(-n+2){display:none}}
+
+/* Hero mit Vorhang */
+.hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;padding:120px var(--rand) 80px;
+  background:var(--nacht) url(hero.jpg) center/cover no-repeat}
+.hero .buehne{position:relative;z-index:1;max-width:900px}
+.hero .logo{width:min(560px,78vw);margin:0 auto;filter:drop-shadow(0 20px 60px rgba(201,162,74,.28))}
+.hero h1{font-size:clamp(2rem,4.6vw,3.6rem);font-style:italic;font-weight:400;margin:28px auto 14px;max-width:18ch;color:var(--elfenbein)}
+.hero p{color:var(--dampf);max-width:46ch;margin:0 auto 34px}
+.hero .aktionen{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.vorhang{position:absolute;top:0;bottom:0;width:51%;z-index:5;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.38) 0 18px,rgba(255,255,255,.035) 38px,rgba(0,0,0,.38) 62px),
+    linear-gradient(180deg,var(--samt-hell),var(--samt) 60%,#0c0c0c);
+  box-shadow:0 0 90px rgba(0,0,0,.7);animation:auf 2.6s cubic-bezier(.7,0,.2,1) .5s forwards}
+.vorhang.l{left:0;--w:-102%}
+.vorhang.r{right:0;--w:102%}
+.vorhang::after{content:"";position:absolute;top:0;bottom:0;width:6px;background:linear-gradient(var(--gold),var(--gold-hell),var(--gold));opacity:.8;
+  inset-inline-end:0}
+.vorhang.r::after{inset-inline-end:auto;inset-inline-start:0}
+.hero .buehne>*{animation:licht 1.6s ease 1.7s both}
+@keyframes auf{to{transform:translateX(var(--w));visibility:hidden}}
+@keyframes licht{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
+
+
+/* Hero-Text: Verlauf nur unten, das Foto bleibt unberührt */
+.hero{place-items:end start;padding:120px var(--rand) clamp(48px,8vh,96px)}
+.hero::before{content:"";position:absolute;inset:0 0 auto 0;height:210px;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,8,8,.62),rgba(8,8,8,0))}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:68%;z-index:0;pointer-events:none;
+  background:linear-gradient(0deg,rgba(8,8,8,.94) 0%,rgba(8,8,8,.78) 38%,rgba(8,8,8,0) 100%)}
+.hero .buehne{max-width:820px;text-align:left}
+.hero h1{font:500 clamp(2.5rem,6.4vw,5.2rem)/1.02 var(--serif);font-style:normal;margin:0 0 34px;max-width:none;color:var(--elfenbein);text-shadow:0 2px 30px rgba(0,0,0,.5)}
+.hero h1 em{display:block;font-style:italic;font-weight:400;color:var(--gold-hell)}
+.hero h1{display:flex;flex-direction:column;align-items:flex-start;gap:.5em;font:500 clamp(2.7rem,5.6vw,5.1rem)/1.02 var(--serif);letter-spacing:-.012em;margin:0 0 34px;max-width:none}
+.hero h1 .titel{display:block;max-width:none;text-wrap:balance;padding-bottom:.08em;color:var(--elfenbein);text-shadow:0 2px 30px rgba(0,0,0,.55)}
+.hero h1 .titel .gold{background:linear-gradient(100deg,#c9a24a 0%,#ecd596 22%,#fff3cf 38%,#ecd596 50%,#c9a24a 70%,#a8802d 100%);background-size:260% 100%;background-position:100% 0;
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 6px 22px rgba(0,0,0,.55));
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;animation:glanz 3.4s ease 2.1s both}
+@keyframes glanz{to{background-position:0 0}}
+.hero h1 em{display:block;font:italic 400 clamp(1.3rem,2.2vw,1.85rem)/1.3 var(--serif);letter-spacing:.04em;color:#efe3c8;text-shadow:0 1px 16px rgba(0,0,0,.75)}
+.hero p{color:#e6dccb;font-size:clamp(1.02rem,1.5vw,1.2rem);max-width:44ch;margin:0 0 34px;text-shadow:0 1px 14px rgba(0,0,0,.6)}
+.hero .aktionen{justify-content:flex-start;gap:16px}
+.pill{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:0 2.6em;border-radius:999px;
+  border:1.5px solid var(--gold-hell);color:#fff;font-weight:600;letter-spacing:.07em;font-size:.98rem;
+  background:rgba(8,8,8,.78);backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,.45);transition:transform .3s,background .3s,color .3s,box-shadow .3s}
+.pill::before{content:"";position:absolute;inset:4px;border-radius:inherit;border:1px solid rgba(236,213,150,.28);pointer-events:none}
+.pill:hover{background:rgba(236,213,150,.16);transform:translateY(-2px)}
+.pill.voll{background:linear-gradient(135deg,#a8802d,var(--gold-hell) 50%,#b88f36);color:#0a0a0a;font-weight:600;border-color:var(--gold-hell);box-shadow:0 10px 36px rgba(201,162,74,.35)}
+.pill.voll::before{border-color:rgba(10,10,10,.35)}
+.pill.voll:hover{box-shadow:0 14px 44px rgba(236,213,150,.5)}
+.lang{display:flex;border:1.5px solid var(--gold-hell);border-radius:999px;padding:3px;margin-left:auto;margin-right:12px}
+.lang button{font:600 .8rem var(--sans);letter-spacing:.08em;color:var(--gold-hell);background:none;border:0;border-radius:999px;padding:.55em .8em;cursor:pointer;transition:background .25s,color .25s}
+.lang button.on{background:var(--gold-hell);color:#0a0a0a}
+.soz{display:flex;gap:4px}
+.soz a{width:40px;height:40px;display:grid;place-items:center;color:var(--gold-hell);filter:drop-shadow(0 1px 6px rgba(0,0,0,.55));transition:color .25s,transform .25s}
+.soz a:hover{color:#fff;transform:translateY(-2px)}
+.soz svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:560px){.nav .soz a:nth-child(-n+2){display:none}.nav img{height:64px}.nav.solid img{height:52px}}
+.pill.sm{min-height:48px;padding:0 1.7em;font-size:.92rem}
+@media(max-width:560px){.hero .aktionen{flex-direction:column;align-items:stretch}.pill{width:100%}}
+
+
+/* Telefon-Menü */
+.burger{display:none;width:48px;height:48px;border:0;background:none;cursor:pointer;position:relative;color:var(--gold-hell);flex:none}
+.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:currentColor;transition:transform .35s,top .35s}
+.burger span:first-child{top:19px}.burger span:last-child{top:28px}
+html.menue .burger span:first-child{top:23.5px;transform:rotate(45deg)}
+html.menue .burger span:last-child{top:23.5px;transform:rotate(-45deg)}
+.mobil{display:none}
+@media(max-width:820px){
+  .nav>.lang,.nav>.soz{display:none}
+  .burger{display:block;margin-left:auto}
+  html.menue{overflow:hidden}
+  .nav{padding-block:6px}.nav img{height:76px}.nav.solid img{height:56px}
+  .mobil{position:fixed;inset:0;z-index:49;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,4vh,40px);padding:96px 28px 34px;text-align:center;overflow-y:auto;
+    background:radial-gradient(ellipse 90% 60% at 50% 0,#211b12 0,#0b0b0b 60%,#050505 100%);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+  html.menue .mobil{opacity:1;visibility:visible}
+  .mobil .orn{width:min(200px,54%);height:auto;filter:brightness(1.9) saturate(1.15)}
+  .mobil ul{list-style:none;padding:0;display:grid;gap:.15em}
+  .mobil ul a{display:block;padding:.28em 0;font:500 clamp(2rem,9vw,2.7rem)/1.15 var(--serif);color:var(--elfenbein);transition:color .2s}
+  .mobil ul a:hover,.mobil ul a:active{color:var(--gold-hell)}
+  .mobil li{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
+  html.menue .mobil li{opacity:1;transform:none}
+  html.menue .mobil li:nth-child(1){transition-delay:.12s}html.menue .mobil li:nth-child(2){transition-delay:.18s}html.menue .mobil li:nth-child(3){transition-delay:.24s}
+  html.menue .mobil li:nth-child(4){transition-delay:.3s}html.menue .mobil li:nth-child(5){transition-delay:.36s}
+  .mfuss{display:grid;justify-items:center;gap:18px;width:100%}
+  .mfuss .pill{width:min(100%,320px)}
+  .mobil .lang{margin:0}
+  .mobil .soz{margin:0}.mobil .soz a{display:grid!important}
+  .mobil address{font-style:normal;color:var(--dampf);font-size:.9rem;line-height:1.5}
+}
+@media(prefers-reduced-motion:reduce){.mobil,.mobil li,.burger span{transition-duration:.01s;transition-delay:0s}}
+
+/* Hero auf dem Telefon: Hochformat-Foto, Text mittig und lesbar */
+@media(max-width:720px){
+  .hero{background-image:url(hero-mobil.jpg);background-position:center 28%;place-items:end center;text-align:center;padding:110px 22px calc(34px + env(safe-area-inset-bottom))}
+  .hero::before{height:170px}
+  .hero::after{height:80%;background:linear-gradient(180deg,rgba(6,6,6,0) 0%,rgba(6,6,6,.5) 26%,rgba(6,6,6,.85) 58%,rgba(6,6,6,.96) 100%)}
+  .hero .buehne{max-width:none;width:100%;text-align:center}
+  .hero h1{align-items:center;font-size:clamp(2.9rem,14vw,4rem);margin-bottom:28px;gap:.55em}
+  .hero h1{font-size:clamp(2.5rem,11.5vw,3.6rem)}
+  .hero h1 .titel{max-width:12ch}
+  .hero h1 .titel br{display:none}
+  .hero h1 em{font-size:1.15rem;max-width:26ch}
+  .hero .aktionen{align-items:stretch;gap:12px}
+}
+
+/* Abschnitte */
+section{padding:clamp(80px,12vw,170px) var(--rand)}
+.schmal{max-width:1180px;margin-inline:auto}
+.kopf{max-width:30ch;margin-bottom:clamp(40px,6vw,80px)}
+
+/* Haus */
+.haus{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(36px,7vw,110px);align-items:center}
+.haus .bild{position:relative;width:min(100%,400px);justify-self:center}
+.rahmen{aspect-ratio:9/16;display:grid;place-content:center;gap:30px;text-align:center;border:1px solid rgba(201,162,74,.4);outline:1px solid rgba(201,162,74,.2);outline-offset:-14px;
+  background:radial-gradient(ellipse at 50% 30%,var(--samt-hell) 0,var(--samt) 55%,#0c0c0c 100%)}
+.rahmen{position:relative;overflow:hidden;background:#000}
+.rahmen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rahmen::after{content:"";position:absolute;inset:14px;border:1px solid rgba(236,213,150,.45);pointer-events:none}
+.rahmen p{position:absolute;left:0;right:0;bottom:0;padding:70px 20px 34px;background:linear-gradient(0deg,rgba(0,0,0,.85),rgba(0,0,0,0));font:italic 400 clamp(1.6rem,3vw,2.4rem) var(--serif);color:var(--gold-hell)}
+.haus h2{max-width:14ch;padding-bottom:.5em;margin-bottom:.9em;position:relative}
+.haus h2::after{content:"";position:absolute;left:0;bottom:0;width:72px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.haus p{color:var(--dampf);max-width:48ch;margin-top:1.2em;font-size:1.05rem;line-height:1.75}
+.haus p a{color:var(--gold-hell);border-bottom:1px solid rgba(201,162,74,.5);transition:color .25s,border-color .25s}
+.haus p a:hover{color:#fff;border-color:#fff}
+.haus p:first-of-type{margin-top:0;color:#d8cfbd}
+.fakten{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:0;margin-top:2.6em;max-width:560px;border-top:1px solid rgba(201,162,74,.3)}
+.fakten>div{padding:20px clamp(14px,2.2vw,30px) 0;border-left:1px solid rgba(201,162,74,.22)}
+.fakten>div:first-child{padding-left:0;border-left:0}
+.fakten b{display:block;font:500 1.45rem/1.15 var(--serif);color:var(--gold-hell)}
+.fakten span{display:block;margin-top:.4em;font-size:.84rem;line-height:1.45;color:var(--dampf)}
+@media(max-width:820px){.haus .bild{width:min(84%,340px)}.haus{grid-template-columns:1fr}.fakten{grid-template-columns:1fr 1fr 1fr;max-width:none}}
+@media(max-width:480px){.fakten{grid-template-columns:1fr}.fakten>div{padding:16px 0;border-left:0;border-bottom:1px solid rgba(201,162,74,.22)}}
+
+/* Galerie */
+.galerie{background:linear-gradient(180deg,var(--nacht),#0e0e0e 50%,var(--nacht))}
+.galerie .kopfzeile{display:flex;justify-content:space-between;align-items:flex-end;gap:24px 60px;flex-wrap:wrap;margin-bottom:clamp(32px,5vw,64px)}
+.galerie .kopfzeile p{color:var(--dampf);max-width:36ch}
+/* Galerie: Mosaik aus 8 Fotos mit Lightbox */
+.raster{--h1:clamp(210px,27vw,390px);--h2:clamp(170px,19vw,280px);display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:var(--h1) var(--h2) var(--h2);gap:clamp(10px,1.4vw,18px)}
+.foto{position:relative;overflow:hidden;margin:0;background:#111;border-radius:2px}
+.foto .auf{all:unset;box-sizing:border-box;display:block;width:100%;height:100%;cursor:zoom-in}
+.foto .auf:focus-visible{outline:2px solid var(--gold-hell);outline-offset:-4px}
+.foto::after{content:"";position:absolute;inset:0;pointer-events:none;border:1px solid rgba(201,162,74,.3);transition:inset .5s,border-color .5s}
+.foto:hover::after,.foto:focus-within::after{inset:10px;border-color:rgba(236,213,150,.7)}
+.foto img{width:100%;height:100%;object-fit:cover;object-position:var(--op,50% 60%);display:block;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.foto:hover img{transform:scale(1.05)}
+.foto figcaption{position:absolute;left:0;right:0;bottom:0;z-index:1;pointer-events:none;padding:clamp(40px,6vw,86px) clamp(16px,2vw,28px) clamp(14px,1.8vw,24px);
+  background:linear-gradient(0deg,rgba(5,5,5,.9),rgba(5,5,5,.45) 55%,rgba(5,5,5,0));font:500 clamp(1.1rem,1.7vw,1.5rem)/1.2 var(--serif);color:var(--gold-hell)}
+.foto figcaption em.kat{display:block;font:500 .68rem/1 var(--sans);letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-style:normal;margin-bottom:.55em}
+.foto figcaption small{display:block;font:400 .84rem/1.4 var(--sans);color:var(--elfenbein);margin-top:.35em;letter-spacing:.02em;max-height:0;overflow:hidden;opacity:0;transition:max-height .45s,opacity .45s}
+.foto:hover figcaption small,.foto:focus-within figcaption small{max-height:3.2em;opacity:.85}
+.foto .lupe{position:absolute;top:14px;right:14px;z-index:2;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;pointer-events:none;
+  background:rgba(8,8,8,.55);border:1px solid rgba(236,213,150,.55);color:var(--gold-hell);opacity:0;transform:scale(.85);transition:opacity .35s,transform .35s}
+.foto .lupe svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.foto:hover .lupe,.foto:focus-within .lupe{opacity:1;transform:none}
+.f1{grid-area:1/1/2/8;--op:60% 72%}.f2{grid-area:1/8/2/13;--op:50% 68%}
+.f3{grid-area:2/1/3/5;--op:30% 68%}.f4{grid-area:2/5/3/9;--op:66% 66%}.f5{grid-area:2/9/3/13;--op:38% 72%}
+.f6{grid-area:3/1/4/5;--op:68% 66%}.f7{grid-area:3/5/4/10;--op:50% 72%}.f8{grid-area:3/10/4/13;--op:78% 66%}
+.galerie-fuss{display:flex;justify-content:center;margin-top:clamp(32px,4.5vw,56px)}
+@media(hover:none){.foto figcaption small{max-height:3.2em;opacity:.85}.foto .lupe{opacity:1;transform:none}}
+@media(max-width:900px){
+  .raster{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:auto}
+  .foto{grid-area:auto!important;aspect-ratio:4/3}
+  .foto.f1,.foto.f7{grid-column:1/-1!important;aspect-ratio:16/9}
+  .f7{order:6}.f6{order:7}.f8{order:8} /* Reihenfolge: voll, 2, 2, voll, 2 */
+}
+@media(max-width:520px){.foto figcaption small{display:none}.foto .lupe{top:8px;right:8px;width:32px;height:32px}}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;z-index:200;display:grid;grid-template-rows:1fr auto;background:rgba(5,5,5,.94);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.lb.on{opacity:1;visibility:visible}
+.lb figure{margin:0;display:grid;place-items:center;padding:clamp(56px,7vw,84px) clamp(12px,6vw,96px) 8px;min-height:0}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;display:block;box-shadow:0 30px 80px rgba(0,0,0,.7);border:1px solid rgba(201,162,74,.35);transition:opacity .3s}
+.lb img.wechsel{opacity:0}
+.lb .unter{padding:6px 20px clamp(18px,3vw,34px);text-align:center}
+.lb .unter b{display:block;font:500 clamp(1.3rem,2.2vw,1.8rem)/1.2 var(--serif);color:var(--gold-hell)}
+.lb .unter span:empty{display:none}
+.lb .unter span{display:block;color:var(--dampf);font-size:.95rem;margin-top:.25em}
+.lb .unter i{display:block;font:500 .78rem/1 var(--sans);letter-spacing:.24em;color:var(--gold);margin-top:.9em;font-style:normal}
+.lb button{position:absolute;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;cursor:pointer;color:var(--gold-hell);
+  background:rgba(12,12,12,.6);border:1.5px solid rgba(236,213,150,.6);transition:background .25s,color .25s}
+.lb button:hover{background:var(--gold-hell);color:#0a0a0a}
+.lb button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.lb button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.lb .zu{top:clamp(12px,2vw,24px);right:clamp(12px,2vw,24px)}
+.lb .vor,.lb .weiter{top:calc(50% - 24px)}
+.lb .vor{left:clamp(8px,2vw,28px)}.lb .weiter{right:clamp(8px,2vw,28px)}
+@media(max-width:700px){.lb .vor,.lb .weiter{top:auto;bottom:clamp(72px,16vw,96px);width:42px;height:42px}}
+html.lb-offen{overflow:hidden}
+@media(prefers-reduced-motion:reduce){.lb,.lb img,.foto img{transition-duration:.01s}}
+
+/* Programm (Speisekarte) */
+.programm{background:linear-gradient(180deg,var(--nacht),#101010 50%,var(--nacht))}
+.akt{display:grid;grid-template-columns:minmax(170px,.55fr) 1.6fr;gap:clamp(24px,5vw,80px);padding-block:clamp(34px,5vw,60px);border-top:1px solid rgba(201,162,74,.28)}
+.akt:last-of-type{border-bottom:1px solid rgba(201,162,74,.28)}
+.akt h3{font-size:clamp(1.6rem,2.6vw,2.2rem);color:var(--gold-hell)}
+.akt h3 small{display:block;font:italic 400 1.05rem var(--serif);color:var(--dampf);margin-top:.3em}
+.akt dl{display:grid;gap:1.5em}
+.akt dt{font:500 1.5rem/1.2 var(--serif)}
+.akt dd{color:var(--dampf);font-size:.95rem}
+.programm .fuss{margin-top:44px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;color:var(--dampf);font-size:.92rem}
+@media(max-width:760px){.akt{grid-template-columns:1fr}}
+
+/* Vorstellungen */
+.zeiten{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,7vw,110px);align-items:center}
+.zeiten .orn{display:block;width:min(260px,60%);height:auto;margin:1.1em 0 0;filter:brightness(1.9) saturate(1.15)}
+.zeiten .spalte{text-align:center}
+.zeiten .spalte .orn{margin-inline:auto}
+.zeiten ul{list-style:none;padding:0;margin:2.4em auto 0;max-width:480px;text-align:left}
+.zeiten li{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:1em 0 1em 18px;border-bottom:1px solid rgba(201,162,74,.2);position:relative}
+.zeiten li span:first-child{font:500 1.3rem var(--serif)}
+.zeiten li span:last-child{color:var(--dampf);font-variant-numeric:tabular-nums;white-space:nowrap}
+.zeiten li::before{content:"";position:absolute;left:0;top:50%;width:6px;height:6px;border:1px solid var(--gold);transform:translateY(-50%) rotate(45deg)}
+.zeiten li.zu span{color:#7d6f5e;font-style:italic}
+.zeiten li.zu::before{border-color:#5d5346}
+.zeiten li.heute span{color:var(--gold-hell)}
+.zeiten li.heute::before{background:var(--gold-hell);border-color:var(--gold-hell)}
+.karte{background:radial-gradient(ellipse at 50% 0,#1c1812 0,#0f0f0f 60%);padding:clamp(34px,4.4vw,64px) clamp(26px,4vw,56px);position:relative;text-align:center;border:1px solid rgba(201,162,74,.5)}
+.karte::before{content:"";position:absolute;inset:10px;border:1px solid rgba(236,213,150,.28);pointer-events:none}
+.karte .logo{display:block;width:min(200px,58%);height:auto;margin:0 auto 1.2em;filter:drop-shadow(0 6px 18px rgba(0,0,0,.6))}
+.karte h3{font-size:clamp(1.8rem,2.6vw,2.4rem)}
+.karte p{color:#cfc4b2;margin:1em auto 1.6em;max-width:34ch}
+.karte a.nummer{display:block;font:500 clamp(2rem,3.4vw,2.9rem)/1.1 var(--serif);color:var(--gold-hell);letter-spacing:.01em;margin-bottom:1.4em}
+.karte a.nummer:hover{color:#fff}
+.karte .knoepfe{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.karte address{font-style:normal;color:var(--dampf);font-size:.95rem;line-height:1.6;margin-top:2em;padding-top:1.6em;border-top:1px solid rgba(201,162,74,.25)}
+@media(max-width:820px){.zeiten{grid-template-columns:1fr}.zeiten ul{max-width:none}}
+
+/* Kontaktleiste */
+.galerie{padding-bottom:clamp(40px,5vw,80px)}
+#zeiten{padding-top:clamp(48px,6vw,96px)}
+.kontaktleiste{padding-block:clamp(32px,5vw,72px)}
+.kontaktleiste h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:clamp(28px,4vw,52px)}
+.kl{list-style:none;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:34px 14px;text-align:center}
+.kl a{display:flex;flex-direction:column;align-items:center;gap:6px;color:inherit}
+.kl .ico{width:clamp(72px,7vw,100px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;margin-bottom:12px;color:var(--gold-hell);
+  background:radial-gradient(circle at 35% 30%,#2a2620,#141210 70%);border:1px solid rgba(201,162,74,.55);
+  box-shadow:0 10px 26px rgba(0,0,0,.45),inset 0 0 0 4px rgba(0,0,0,.35);transition:transform .3s,background .3s,color .3s,box-shadow .3s,border-color .3s}
+.kl .ico svg{width:36%;height:36%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.kl strong{font:500 1.3rem/1.2 var(--serif);color:var(--elfenbein)}
+.kl small{color:var(--dampf);font-size:.92rem;line-height:1.5;overflow-wrap:break-word}
+.kl a:hover .ico,.kl a:focus-visible .ico{transform:translateY(-4px);background:linear-gradient(135deg,#a8802d,var(--gold-hell) 50%,#b88f36);color:#1b1408;border-color:var(--gold-hell);box-shadow:0 16px 34px rgba(0,0,0,.55)}
+.kl a:focus-visible{outline:2px solid var(--gold-hell);outline-offset:6px;border-radius:12px}
+@media(max-width:980px){.kl{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.kl{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 10px}}
+
+/* Fuß */
+footer{padding:clamp(50px,6vw,84px) var(--rand) 34px;background:linear-gradient(180deg,#0a0a0a,#050505);color:var(--dampf);font-size:.95rem;position:relative}
+footer::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+footer a{transition:color .25s}footer a:hover{color:var(--gold-hell)}
+footer .orn{display:block;width:min(240px,56%);height:auto;margin:0 auto clamp(34px,5vw,60px);filter:brightness(1.9) saturate(1.15)}
+.fgrid{display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:clamp(32px,6vw,90px);max-width:1180px;margin-inline:auto;align-items:start}
+.fmarke img{height:clamp(84px,9vw,118px);width:auto;display:block;margin-bottom:18px}
+.fmarke p{max-width:30ch;line-height:1.7}
+footer h4{font:500 1.35rem/1.2 var(--serif);color:var(--gold-hell);margin-bottom:1em}
+footer nav ul{list-style:none;padding:0;display:grid;gap:.7em}
+footer address{font-style:normal;line-height:1.7}
+footer .fnr{display:inline-block;margin:.9em 0 1.1em;font:500 1.5rem var(--serif);color:var(--ivory,#f2e9d8)}
+footer .soz{margin-left:-10px}
+footer .klein{max-width:1180px;margin:clamp(40px,5vw,64px) auto 0;padding-top:22px;border-top:1px solid rgba(201,162,74,.2);font-size:.82rem;color:#8d826f;display:flex;gap:10px 28px;flex-wrap:wrap;align-items:center}
+footer .klein span{margin-right:auto}
+@media(max-width:820px){.fgrid{grid-template-columns:1fr;text-align:center;justify-items:center}.fmarke img{margin-inline:auto}footer .soz{margin-left:0;justify-content:center}footer .klein{justify-content:center}footer .klein span{margin:0;width:100%;text-align:center}}
+
+@media(prefers-reduced-motion:reduce){
+  .vorhang{display:none}.hero .buehne>*,.hero h1 .titel .gold{animation:none;background-position:0 0}html{scroll-behavior:auto}
+}
+/* Bühne */
+.menuebuehne{overflow-x:clip;scroll-margin-top:0;min-height:100svh;display:grid;grid-template-rows:1fr auto;padding:clamp(88px,10vh,112px) var(--rand) 26px;
+  background:
+    linear-gradient(180deg,var(--nacht) 0,rgba(8,8,8,0) 14%,rgba(8,8,8,0) 80%,var(--nacht) 100%),
+    radial-gradient(ellipse 52% 46% at 50% 56%,rgba(0,0,0,.22),rgba(0,0,0,0) 100%),
+    url(art/menue-fond.webp) center/cover no-repeat,var(--nacht)}
+@media(max-width:720px){.menuebuehne{background:
+    linear-gradient(180deg,var(--nacht) 0,rgba(8,8,8,0) 10%,rgba(8,8,8,0) 86%,var(--nacht) 100%),
+    url(art/menue-fond-mobil.webp) center/cover no-repeat,var(--nacht)}}
+.tisch{position:relative;perspective:2600px;perspective-origin:50% 35%;min-height:calc(var(--h) + 60px)}
+.neig{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx,10deg)) rotateY(var(--ry,0deg));transition:transform .5s ease-out}
+.schub{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .95s cubic-bezier(.45,.05,.25,1)}
+.schub.zu-vorn{transform:translateX(calc(var(--w)/-2))}
+.schub.zu-hinten{transform:translateX(calc(var(--w)/2))}
+.schatten{pointer-events:none;position:absolute;left:50%;top:calc(50% + var(--h)/2 - 4px);width:calc(var(--w)*2.1);height:60px;margin-left:calc(var(--w)*-1.05);
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.75),transparent 70%);filter:blur(10px);transform:translateZ(-60px)}
+.buch{position:absolute;left:50%;top:50%;width:var(--w);height:var(--h);margin-top:calc(var(--h)/-2);transform-style:preserve-3d}
+.hinten{position:absolute;inset:0 -3px -2px 0;border-radius:0 2px 2px 0;transform:translateZ(-4px);transition:transform .95s cubic-bezier(.45,.05,.25,1),inset .95s cubic-bezier(.45,.05,.25,1);
+  background:linear-gradient(90deg,#d9cdb1,#b9aa83)} /* aufgeschlagen: nur ein schmaler Papierrand statt schwarzem Rahmen */
+.schub.zu-vorn .hinten,.schub.zu-hinten .hinten{inset:-6px -8px -6px 0;border-radius:0 10px 10px 0;background:linear-gradient(135deg,#1c1c1c,#0a0a0a)} /* geschlossen: dunkler Einband */
+.schub.zu-hinten .hinten{transform:translateZ(-4px) translateX(-100%) scaleX(-1)}
+
+/* Blätter */
+.blatt{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;cursor:pointer;
+  translate:0 0 var(--z,0px);transform:none;transition:transform .95s cubic-bezier(.45,.05,.25,1)}
+.blatt.um{transform:rotateY(-180deg)}
+.seite{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;container-type:inline-size;
+  background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.28),transparent 55%),url(art/papier.webp) center/cover no-repeat,var(--papier);
+  color:var(--tinte);display:flex;flex-direction:column;align-items:center;text-align:center;padding:8% 9% 15%}
+.seite.hinterseite{transform:rotateY(180deg)}
+.seite::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.3),rgba(0,0,0,0) 13%)}
+.seite.hinterseite::after{background:linear-gradient(270deg,rgba(0,0,0,.3),rgba(0,0,0,0) 13%)}
+
+
+/* Einband */
+.seite.einband{background:url(art/einband.webp) center/100% 100% no-repeat,#0b0b0b;
+  color:var(--gold-hell);justify-content:center;gap:4cqw;border-radius:0 10px 10px 0}
+.seite.einband::before{display:none}
+.einband img{width:100%;max-width:none;margin:-2cqw 0 0;height:auto;filter:drop-shadow(0 2cqw 4cqw rgba(0,0,0,.6))}
+.einband .titel{font:italic 500 15cqw/1 var(--serif);letter-spacing:.02em;text-shadow:0 .6cqw 2cqw rgba(0,0,0,.6)}
+.einband .ort{font:500 5cqw var(--sans);letter-spacing:.34em;color:var(--dampf);text-transform:uppercase}
+
+/* Inhalt */
+.seite h2{font:500 15.5cqw/1 var(--serif);letter-spacing:-.01em;margin-top:3cqw}
+.seite .unter{font:italic 400 6.6cqw var(--serif);color:var(--gold-tief);margin:2cqw 0 4.5cqw}
+.zier{width:18cqw;height:1px;background:var(--gold-tief);position:relative;margin:0 auto}
+.zier::after{content:"";position:absolute;left:50%;top:50%;width:1.8cqw;height:1.8cqw;background:var(--papier);border:1px solid var(--gold-tief);transform:translate(-50%,-50%) rotate(45deg)}
+.gericht{margin:0}
+.gericht dt{font:600 8.6cqw/1.12 var(--serif)}
+.gericht dd{font:italic 400 5.6cqw/1.25 var(--serif);color:#4b4235;margin-top:1.4cqw}
+.liste{width:100%;flex:1;display:flex;flex-direction:column;justify-content:space-evenly;padding-top:4cqw}
+.text{font:400 5.7cqw/1.45 var(--serif);max-width:28ch;margin:5cqw auto 6cqw}
+.mzitat{font:italic 400 7.2cqw/1.25 var(--serif);color:var(--gold-tief);margin-top:auto;max-width:18ch;padding-bottom:3cqw}
+.mzeiten{width:100%;margin:auto 0;text-align:left}
+.mzeiten div{display:flex;justify-content:space-between;gap:3cqw;padding:3.2cqw 0;border-bottom:1px solid rgba(138,106,31,.35);font:500 5.4cqw var(--serif)}
+.mzeiten div span:last-child{color:#4b4235;font-variant-numeric:tabular-nums}
+.mkontakt{margin-top:2cqw;font:600 6.4cqw/1.3 var(--serif)}
+.mkontakt small{display:block;font:italic 400 4.4cqw var(--serif);color:#4b4235;margin-top:1.2cqw}
+.knopf{display:inline-flex;margin-top:5cqw;padding:3cqw 8cqw;border-radius:999px;background:linear-gradient(135deg,#a8802d,var(--gold-hell) 50%,#b88f36);color:#2a1d07;font:600 4.2cqw var(--sans);letter-spacing:.06em}
+.hinweis{margin-top:6cqw;font:italic 400 4.6cqw/1.35 var(--serif);color:#4b4235;max-width:28ch}
+.gross{font:italic 500 13cqw/1.05 var(--serif);margin:5cqw 0 0;color:var(--tinte);max-width:9ch}
+
+/* Emblem und Fuß */
+.emb{width:17cqw;height:17cqw;border-radius:50%;display:grid;place-items:center;color:var(--gold-tief);flex:none;
+  border:1px solid var(--gold-tief);box-shadow:0 0 0 1.1cqw var(--papier),0 0 0 1.6cqw rgba(138,106,31,.55);
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(201,162,74,.12))}
+.emb svg{width:56%;height:56%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.emb.gross-emb{width:28cqw;height:28cqw}
+.seite.ende{justify-content:center;padding:13% 14%;color:var(--gold-hell);
+  background:url(art/einband.webp) center/100% 100% no-repeat,#0b0b0b;border-radius:0 10px 10px 0}
+.seite.ende .folio{display:none}
+.seite.ende .emb{color:var(--gold-hell);border-color:rgba(236,213,150,.7);box-shadow:0 0 0 1.1cqw #0d0d0d,0 0 0 1.6cqw rgba(236,213,150,.5);background:none}
+.seite.ende .gross{color:#f2e9d8}
+.seite.ende .trenner{filter:brightness(1.9) saturate(1.15)}
+.seite.ende .mkontakt{color:var(--gold-hell)}
+.seite.ende .mkontakt small,.seite.ende .hinweis{color:#b9ad96}
+.folio{position:absolute;left:0;right:0;bottom:1.8cqw;z-index:1;font:500 3.2cqw var(--sans);letter-spacing:.34em;text-transform:uppercase;color:var(--gold-tief);
+  display:flex;align-items:center;justify-content:center;gap:3cqw}
+.folio img{height:12cqw;width:auto;display:block;filter:drop-shadow(0 .3cqw .6cqw rgba(0,0,0,.18))}
+.folio::before,.folio::after{content:"";width:9cqw;height:1px;background:rgba(138,106,31,.6)}
+
+.ill{height:19cqw;width:auto;max-width:56cqw;object-fit:contain;flex:none;margin-top:-1cqw}
+.trenner{width:46cqw;height:auto;flex:none;margin:-1cqw 0 1cqw}
+
+/* Vollständige Karte (karte/build.mjs) */
+.seite.dicht{padding:6.5% 8% 14.5%}
+.seite.dicht h2{font-size:10.5cqw;margin-top:.5cqw}
+.seite.dicht .unter{font-size:5cqw;margin:1cqw 0 2.5cqw}
+.seite.dicht .ill{height:10cqw;margin-top:-2cqw}
+.seite.dicht .trenner{width:34cqw;margin:-1cqw 0 1cqw}
+.seite.dicht .emb{width:11cqw;height:11cqw}
+.seite.dicht.fort h2{font-size:8.6cqw;margin-top:.5cqw}
+.seite.dicht.fort .unter{font-size:4.2cqw;margin:.2cqw 0 1.6cqw}
+.seite.dicht.fort .trenner{display:none}
+.seite.dicht.fort .liste{padding-top:2.4cqw;border-top:1px solid rgba(138,106,31,.35)}
+.dicht .liste{justify-content:flex-start;gap:1.9cqw;padding-top:2cqw;text-align:left;min-height:0}
+.gruppe{font:600 3.3cqw/1 var(--sans);letter-spacing:.26em;text-transform:uppercase;color:var(--gold-tief);margin:1.6cqw 0 .2cqw;padding-bottom:1.2cqw;border-bottom:1px solid rgba(138,106,31,.4)}
+.gruppe small{font:italic 400 4.1cqw var(--serif);letter-spacing:0;text-transform:none;color:#6b5f4c}
+.gruppe:first-child{margin-top:0}
+.pos .zeile{display:flex;align-items:baseline;gap:1.6cqw}
+.pos .n{font:600 4.6cqw/1.12 var(--serif)}
+.pos .tag{font:italic 400 3.6cqw var(--serif);color:var(--gold-tief);white-space:nowrap}
+.pos .fuell{flex:1;min-width:2cqw;border-bottom:1px dotted rgba(75,66,53,.55);position:relative;top:-.9cqw}
+.pos .p{font:600 4.7cqw/1 var(--serif);font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
+.pos .b{font:italic 400 3.75cqw/1.2 var(--serif);color:#4b4235;margin-top:.5cqw}
+.dicht .hinweis{margin-top:auto;padding-top:2cqw;font-size:3.7cqw;max-width:none;text-align:center}
+.dicht .hinweis.kopf{margin:0;padding:0;font-size:4cqw;max-width:none;text-align:center}
+.kapitel{text-align:center;margin:3cqw 0 0;padding-top:3.5cqw;border-top:1px solid rgba(138,106,31,.45)}
+.kapitel h3{font:italic 500 9cqw/1 var(--serif);color:var(--tinte)}
+.kapitel p{font:italic 400 4.4cqw var(--serif);color:var(--gold-tief);margin-top:1cqw}
+.inhalt{width:100%;flex:1;display:flex;flex-direction:column;justify-content:space-evenly;padding:2cqw 0}
+.ziel{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;border-bottom:1px solid rgba(138,106,31,.35)}
+.ziel a{font:600 5.8cqw/1 var(--serif);padding:1.5cqw 2cqw 1.5cqw 0;cursor:pointer;transition:color .2s}
+.ziel a:hover,.ziel a:focus-visible{color:var(--gold-tief);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.7cqw}
+.ziel i{font:italic 400 4.4cqw var(--serif);color:#6b5f4c}
+
+/* Steuerung */
+.steuerung{display:flex;align-items:center;justify-content:center;gap:22px;padding-top:6px;position:relative;z-index:10}
+.pfeil{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--gold-hell);background:none;color:var(--gold-hell);display:grid;place-items:center;cursor:pointer;transition:background .25s,color .25s,opacity .25s}
+.pfeil:hover:not(:disabled){background:var(--gold-hell);color:#0a0a0a}
+.pfeil:disabled{opacity:.3;cursor:default}
+.pfeil svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.punkte{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:min(56vw,460px)}
+.punkte button{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--gold);background:none;padding:0;cursor:pointer;transition:background .25s,transform .25s}
+.punkte button.on{background:var(--gold-hell);transform:scale(1.25)}
+.tipp{text-align:center;color:var(--dampf);font-size:.88rem;margin-top:12px}
+
+/* Schmale Bildschirme: Seiten untereinander statt 3D */
+.stapel{display:none}
+@media(max-width:720px){
+  .menuebuehne{display:block;min-height:0;padding:92px 16px 36px}
+  .tisch,.tipp{display:none}
+  .punkte button{display:none}
+  .punkte::before{content:attr(data-z);font:500 .95rem/1 var(--sans);letter-spacing:.14em;color:var(--gold-hell);min-width:7em;text-align:center}
+  .stapel{display:block;position:relative;width:min(88vw,430px);aspect-ratio:.72;margin:4px auto 30px;perspective:1700px;touch-action:pan-y;user-select:none}
+  .karte2{position:absolute;inset:0;z-index:calc(200 - var(--p));transform-origin:left center;border-radius:2px 8px 8px 2px;box-shadow:0 22px 44px rgba(0,0,0,.6);
+    transition:transform .95s cubic-bezier(.65,.05,.25,1),opacity .3s}
+  .karte2.weg{transform:rotateY(-112deg);opacity:0;pointer-events:none;transition:transform .95s cubic-bezier(.65,.05,.25,1),opacity .3s .6s}
+  .stapel .seite,.stapel .seite.hinterseite{position:absolute;inset:0;transform:none;backface-visibility:visible;cursor:pointer}
+}
+}
+@media(prefers-reduced-motion:reduce){.blatt,.schub,.neig{transition-duration:.01s}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a href="#top" aria-label="Opera, Startseite"><img src="logo/opera-nav.webp" alt="Opera"></a>
+  <ul>
+    <li><a href="#haus">Das Haus</a></li>
+    <li><a href="#speisekarte">Die Karte</a></li>
+    <li><a href="#galerie">Die Küche</a></li>
+    <li><a href="#zeiten">Öffnungszeiten</a></li>
+    <li><a href="#kontakt">Reservierung</a></li>
+  </ul>
+  <div class="lang" role="group" aria-label="Sprache"><button type="button" data-l="de" class="on" aria-pressed="true">DE</button><button type="button" data-l="en" aria-pressed="false">EN</button><button type="button" data-l="it" aria-pressed="false">IT</button></div>
+  <div class="soz"><a href="https://www.instagram.com/" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a><a href="https://www.tiktok.com/" aria-label="TikTok" title="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.3 2.4 1.8 4 4 4.2v3a7 7 0 0 1-4-1.3V15a6 6 0 1 1-6-6c.3 0 .6 0 .9.1v3.2a3 3 0 1 0 2.1 2.9V3z"/></svg></a><a href="https://wa.me/4972312039962" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/><path d="M9 9c.3 2 2.5 4.2 4.5 4.5l1-1.2 1.6.8-.3 1.2c-3 .5-7-3.5-6.5-6.5z"/></svg></a><a href="tel:+4972312039962" aria-label="Anrufen" title="Anrufen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a><a href="https://www.google.com/maps/search/?api=1&query=Altst%C3%A4dter%20Kirchenweg%203%2C%2075175%20Pforzheim" aria-label="Route anzeigen" title="Route anzeigen" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></a></div>
+  <button class="burger" id="burger" type="button" aria-label="Menü" aria-expanded="false" aria-controls="mobil"><span></span><span></span></button>
+</header>
+
+<div class="mobil" id="mobil">
+  <img class="orn" src="art/trenner.webp" alt="" aria-hidden="true">
+  <nav aria-label="Navigation">
+    <ul>
+      <li><a href="#haus">Das Haus</a></li>
+      <li><a href="#speisekarte">Die Karte</a></li>
+      <li><a href="#galerie">Die Küche</a></li>
+      <li><a href="#zeiten">Öffnungszeiten</a></li>
+      <li><a href="#kontakt">Reservierung</a></li>
+    </ul>
+  </nav>
+  <div class="mfuss">
+    <a class="pill voll" href="tel:+4972312039962">+49 7231 2039962</a>
+    <div class="soz"><a href="https://www.instagram.com/" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a><a href="https://www.tiktok.com/" aria-label="TikTok" title="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.3 2.4 1.8 4 4 4.2v3a7 7 0 0 1-4-1.3V15a6 6 0 1 1-6-6c.3 0 .6 0 .9.1v3.2a3 3 0 1 0 2.1 2.9V3z"/></svg></a><a href="https://wa.me/4972312039962" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/><path d="M9 9c.3 2 2.5 4.2 4.5 4.5l1-1.2 1.6.8-.3 1.2c-3 .5-7-3.5-6.5-6.5z"/></svg></a><a href="tel:+4972312039962" aria-label="Anrufen" title="Anrufen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a><a href="https://www.google.com/maps/search/?api=1&query=Altst%C3%A4dter%20Kirchenweg%203%2C%2075175%20Pforzheim" aria-label="Route anzeigen" title="Route anzeigen" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></a></div>
+    <div class="lang" role="group" aria-label="Sprache"><button type="button" data-l="de" class="on" aria-pressed="true">DE</button><button type="button" data-l="en" aria-pressed="false">EN</button><button type="button" data-l="it" aria-pressed="false">IT</button></div>
+    <address>Altstädter Kirchenweg 3, 75175 Pforzheim</address>
+  </div>
+</div>
+
+<main id="top">
+<section class="hero" aria-label="Willkommen">
+  <div class="vorhang l" aria-hidden="true"></div>
+  <div class="vorhang r" aria-hidden="true"></div>
+  <div class="buehne">
+    <h1><span class="titel">Die Oper der<br> <span class="gold">italienischen Küche</span></span><em>Restaurant und Pizzeria im Herzen von Pforzheim</em></h1>
+    <div class="aktionen">
+      <a class="pill voll" href="#kontakt">Tisch reservieren</a>
+      <a class="pill" href="#speisekarte">Speisekarte ansehen</a>
+    </div>
+  </div>
+</section>
+
+<section class="menuebuehne" id="speisekarte" aria-label="Speisekarte">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-glas" viewBox="0 0 24 24"><path d="M8 3h8l-1 7a3 3 0 01-6 0z M12 13v7 M8 21h8"/></symbol>
+  <symbol id="i-olive" viewBox="0 0 24 24"><path d="M12 21V8 M12 13c-4 0-6-2-6-5 4 0 6 2 6 5 M12 16c4 0 6-2 6-5-4 0-6 2-6 5 M12 8c0-3 1-5 3-6"/></symbol>
+  <symbol id="i-pizza" viewBox="0 0 24 24"><path d="M3 7c6-4 12-4 18 0L12 21z M9 10h.01 M14 10.5h.01 M12 15h.01"/></symbol>
+  <symbol id="i-fisch" viewBox="0 0 24 24"><path d="M3 12c3-5 9-6 13-3l5-3v12l-5-3c-4 3-10 2-13-3z M7.5 11h.01"/></symbol>
+  <symbol id="i-dolci" viewBox="0 0 24 24"><path d="M7 11l5 11 5-11z M7 11a5 5 0 0110 0 M12 3v3"/></symbol>
+  <symbol id="i-uhr" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+</defs></svg>
+  <div class="tisch" id="tisch">
+    <div class="neig" id="neig">
+      <div class="schub" id="schub">
+        <div class="schatten"></div>
+        <div class="buch" id="buch">
+          <div class="hinten"></div>
+
+          <!-- Blatt 0: Einband | Benvenuti -->
+          <div class="blatt">
+            <div class="seite einband">
+              <img id="einbandlogo" alt="Opera">
+              <div class="titel">Speisekarte</div>
+              <div class="ort">Pforzheim</div>
+            </div>
+            <div class="seite hinterseite">
+              <div class="emb"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-glas"/></svg></div>
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Benvenuti</h2>
+              <p class="unter">Willkommen im Opera</p>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <p class="text">Willkommen im Opera: italienische Küche, Pasta und Pizza in der Pforzheimer Altstadt.</p>
+              <p class="mzitat">Jeder Gast ist bei uns ein Ehrengast, jeder Abend ein Auftritt.</p>
+            </div>
+          </div>
+
+          <!-- KARTE:START (erzeugt von karte/build.mjs, nicht von Hand ändern) -->
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Die Karte</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <nav class="inhalt" aria-label="Kapitel"><div class="ziel"><a href="#speisekarte" data-seite="3" aria-label="Antipasti, Vorspeisen">Antipasti</a><i>Vorspeisen</i></div><div class="ziel"><a href="#speisekarte" data-seite="5" aria-label="Insalate, Salate">Insalate</a><i>Salate</i></div><div class="ziel"><a href="#speisekarte" data-seite="6" aria-label="Pasta, Nudelgerichte">Pasta</a><i>Nudelgerichte</i></div><div class="ziel"><a href="#speisekarte" data-seite="8" aria-label="Pizza, Klassiker und Kreationen">Pizza</a><i>Klassiker und Kreationen</i></div><div class="ziel"><a href="#speisekarte" data-seite="11" aria-label="Carne, Fleisch">Carne</a><i>Fleisch</i></div><div class="ziel"><a href="#speisekarte" data-seite="13" aria-label="Pesce, Fisch &amp; Meeresfrüchte">Pesce</a><i>Fisch &amp; Meeresfrüchte</i></div><div class="ziel"><a href="#speisekarte" data-seite="14" aria-label="Kinder, Für unsere kleinen Gäste">Kinder</a><i>Für unsere kleinen Gäste</i></div><div class="ziel"><a href="#speisekarte" data-seite="15" aria-label="Dolci, Dessert">Dolci</a><i>Dessert</i></div><div class="ziel"><a href="#speisekarte" data-seite="15" aria-label="Bevande, Getränke">Bevande</a><i>Getränke</i></div><div class="ziel"><a href="#speisekarte" data-seite="21" aria-label="Vino, Unsere Weinempfehlung">Vino</a><i>Unsere Weinempfehlung</i></div></nav>
+              <p class="hinweis">Alle Preise in Euro.</p>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Antipasti</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><div class="pos"><div class="zeile"><span class="n">Antipasto Rustico</span><span class="tag">für 2 Personen</span><span class="fuell" aria-hidden="true"></span><span class="p">18,50</span></div><p class="b">Verschiedene Wurstsorten · Gemüse · Käse</p></div><div class="pos"><div class="zeile"><span class="n">Carpaccio di Gamberi</span><span class="fuell" aria-hidden="true"></span><span class="p">17,50</span></div><p class="b">Rotgarnelen · Pfeffer · Olivenöl · Orangensaft-Dressing</p></div><div class="pos"><div class="zeile"><span class="n">Insalata Polipo</span><span class="fuell" aria-hidden="true"></span><span class="p">16,50</span></div><p class="b">Oktopus · Kartoffeln · Oliven · Paprika</p></div><div class="pos"><div class="zeile"><span class="n">Insalata di Mare</span><span class="fuell" aria-hidden="true"></span><span class="p">16,50</span></div><p class="b">Marinierte Meeresfrüchte · Paprika · Oliven</p></div><div class="pos"><div class="zeile"><span class="n">Carpaccio di Manzo</span><span class="fuell" aria-hidden="true"></span><span class="p">16,00</span></div><p class="b">Fein geschnittenes Rinderfilet · Rucola · Grana Padano</p></div><div class="pos"><div class="zeile"><span class="n">Vitello Tonnato</span><span class="fuell" aria-hidden="true"></span><span class="p">16,00</span></div><p class="b">Dünne Kalbfleischscheiben · Thunfischsoße · Kapern · Sardellen</p></div><div class="pos"><div class="zeile"><span class="n">Bruschetta</span><span class="fuell" aria-hidden="true"></span><span class="p">9,00</span></div><p class="b">Geröstetes Brot · Tomatenwürfel · Parmigiano Reggiano</p></div><div class="pos"><div class="zeile"><span class="n">Bruschetta Salmone</span><span class="fuell" aria-hidden="true"></span><span class="p">12,50</span></div><p class="b">Geröstetes Brot · Tomatenwürfel · Geräucherter Lachs</p></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Antipasti</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Suppe</p><div class="pos"><div class="zeile"><span class="n">Pomodoro</span><span class="fuell" aria-hidden="true"></span><span class="p">7,50</span></div><p class="b">Tomatencremesuppe</p></div><div class="pos"><div class="zeile"><span class="n">Minestrone</span><span class="fuell" aria-hidden="true"></span><span class="p">8,50</span></div><p class="b">Gemüsesuppe</p></div><p class="gruppe">Contorni <small>Beilagen</small></p><div class="pos"><div class="zeile"><span class="n">Bratgemüse</span><span class="fuell" aria-hidden="true"></span><span class="p">6,00</span></div></div><div class="pos"><div class="zeile"><span class="n">Bratkartoffeln</span><span class="fuell" aria-hidden="true"></span><span class="p">6,00</span></div></div><div class="pos"><div class="zeile"><span class="n">Pommes Home Style</span><span class="fuell" aria-hidden="true"></span><span class="p">5,50</span></div></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Insalate</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="hinweis kopf">Wählen Sie ein Dressing: Joghurt-Dressing, Senfdressing oder Essig-Öl.</p><div class="pos"><div class="zeile"><span class="n">Mista Piccola</span><span class="fuell" aria-hidden="true"></span><span class="p">7,90</span></div><p class="b">Kleiner gemischter Salat</p></div><div class="pos"><div class="zeile"><span class="n">Pollo</span><span class="fuell" aria-hidden="true"></span><span class="p">15,90</span></div><p class="b">Gemischter Salat · Gebratene Hähnchenbruststreifen</p></div><div class="pos"><div class="zeile"><span class="n">Tonno</span><span class="fuell" aria-hidden="true"></span><span class="p">15,50</span></div><p class="b">Gemischter Salat · Thunfisch · Oliven</p></div><div class="pos"><div class="zeile"><span class="n">Italiana</span><span class="fuell" aria-hidden="true"></span><span class="p">16,50</span></div><p class="b">Gemischter Salat · Gekochtes Ei · Mozzarella · Parmaschinken · Walnuss</p></div><div class="pos"><div class="zeile"><span class="n">Gamberetti</span><span class="fuell" aria-hidden="true"></span><span class="p">16,90</span></div><p class="b">Gemischter Salat · Shrimps · Mozzarella · Grana Padano · Gebratene Orangen</p></div><div class="pos"><div class="zeile"><span class="n">Burrata</span><span class="fuell" aria-hidden="true"></span><span class="p">17,50</span></div><p class="b">Gemischter Salat · Parmaschinken · Burrata · Grana Padano · Balsamico-Creme</p></div><div class="pos"><div class="zeile"><span class="n">Bosco</span><span class="fuell" aria-hidden="true"></span><span class="p">19,00</span></div><p class="b">Gemischter Salat · Rinderstreifen · Braune Champignons · Grana Padano</p></div><div class="pos"><div class="zeile"><span class="n">Caprese di Bufala</span><span class="fuell" aria-hidden="true"></span><span class="p">14,50</span></div><p class="b">Büffelmozzarella · Kirschtomaten · Basilikum · Balsamico-Creme · Olivenöl</p></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Pasta</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="hinweis kopf">Weitere Zutaten auf Wunsch: 1 bis 3 €, je nach Zutat.</p><div class="pos"><div class="zeile"><span class="n">Carbonara</span><span class="tag">das Original</span><span class="fuell" aria-hidden="true"></span><span class="p">15,90</span></div><p class="b">Spaghetti · Guanciale · Parmigiano Reggiano · Eigelb · Pecorino</p></div><div class="pos"><div class="zeile"><span class="n">Alla Norma</span><span class="fuell" aria-hidden="true"></span><span class="p">14,90</span></div><p class="b">Spaghetti · Auberginen · Grana Padano · Basilikum · Tomaten-Sahnesoße · Knoblauch</p></div><div class="pos"><div class="zeile"><span class="n">Frutti di Mare</span><span class="fuell" aria-hidden="true"></span><span class="p">18,90</span></div><p class="b">Spaghetti · Meeresfrüchte · Kirschtomaten · Knoblauch · Weißwein · Tomatensoße</p></div><div class="pos"><div class="zeile"><span class="n">Amatriciana</span><span class="fuell" aria-hidden="true"></span><span class="p">15,90</span></div><p class="b">Spaghetti · Guanciale · Parmigiano Reggiano · Zwiebeln · Tomatensoße · Pecorino</p></div><div class="pos"><div class="zeile"><span class="n">Vongole</span><span class="fuell" aria-hidden="true"></span><span class="p">17,50</span></div><p class="b">Linguine · Venusmuscheln · Kirschtomaten · Knoblauch · Weißwein</p></div><div class="pos"><div class="zeile"><span class="n">Deliziosa</span><span class="fuell" aria-hidden="true"></span><span class="p">18,90</span></div><p class="b">Linguine · Shrimps · Burrata · Knoblauch · Pistazien · Zucchinicreme · Kirschtomaten · Sahnesoße</p></div><div class="pos"><div class="zeile"><span class="n">Gamberoni</span><span class="fuell" aria-hidden="true"></span><span class="p">18,90</span></div><p class="b">Linguine · Gambas · Kirschtomaten · Zwiebeln · Knoblauch · Stracciatella · Weinbrand</p></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Pasta</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><div class="pos"><div class="zeile"><span class="n">Giardino</span><span class="fuell" aria-hidden="true"></span><span class="p">16,50</span></div><p class="b">Rigatoni · Auberginen · Zucchini · Parmigiano Reggiano · Burrata · Knoblauch · Kirschtomaten · Tomaten-Sahnesoße</p></div><div class="pos"><div class="zeile"><span class="n">Quattro Formaggi</span><span class="fuell" aria-hidden="true"></span><span class="p">14,90</span></div><p class="b">Rigatoni · Gorgonzola · Geräucherter Käse · Grana Padano · Mozzarella · Sahnesoße</p></div><div class="pos"><div class="zeile"><span class="n">Fantasia</span><span class="fuell" aria-hidden="true"></span><span class="p">16,50</span></div><p class="b">Rigatoni · Guanciale · Grana Padano · Zwiebeln · Tomaten-Sahnesoße · Getrocknete Tomaten · Walnuss</p></div><div class="pos"><div class="zeile"><span class="n">Boscaiola</span><span class="fuell" aria-hidden="true"></span><span class="p">16,90</span></div><p class="b">Rigatoni · Parmaschinken · Grana Padano · Knoblauch · Braune Champignons · Tomaten-Sahnesoße · Geräucherter Käse</p></div><div class="pos"><div class="zeile"><span class="n">Salmone</span><span class="fuell" aria-hidden="true"></span><span class="p">17,90</span></div><p class="b">Fettuccelle · Lachs · Zucchini · Knoblauch · Kirschtomaten · Tomaten-Sahnesoße · Weinbrand</p></div><div class="pos"><div class="zeile"><span class="n">Rustico</span><span class="fuell" aria-hidden="true"></span><span class="p">19,50</span></div><p class="b">Fettuccelle · Rinderstreifen · Kirschtomaten · Knoblauch · Braune Champignons · Grana Padano</p></div><div class="pos"><div class="zeile"><span class="n">Gamberetti</span><span class="fuell" aria-hidden="true"></span><span class="p">17,90</span></div><p class="b">Fettuccelle · Shrimps · Kirschtomaten · Zucchini · Zwiebeln · Tomaten-Sahnesoße · Knoblauch · Venusmuscheln · Weißwein</p></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Pizza</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="hinweis kopf">Weitere Zutaten auf Wunsch: 1 bis 3 €, je nach Zutat.</p><div class="pos"><div class="zeile"><span class="n">Focaccia</span><span class="fuell" aria-hidden="true"></span><span class="p">7,50</span></div><p class="b">Pizzabrot · Knoblauch · Olivenöl · Oregano</p></div><div class="pos"><div class="zeile"><span class="n">Margherita</span><span class="fuell" aria-hidden="true"></span><span class="p">11,00</span></div><p class="b">Mozzarella · Tomatensoße</p></div><div class="pos"><div class="zeile"><span class="n">Salame</span><span class="fuell" aria-hidden="true"></span><span class="p">12,00</span></div><p class="b">Mozzarella · Tomatensoße · Italienische Salami</p></div><div class="pos"><div class="zeile"><span class="n">Prosciutto</span><span class="fuell" aria-hidden="true"></span><span class="p">12,00</span></div><p class="b">Mozzarella · Tomatensoße · Italienischer Schinken</p></div><div class="pos"><div class="zeile"><span class="n">Rustico</span><span class="fuell" aria-hidden="true"></span><span class="p">14,00</span></div><p class="b">Mozzarella · Tomatensoße · Kirschtomaten · Rucola · Grana Padano</p></div><div class="pos"><div class="zeile"><span class="n">Bufalina</span><span class="fuell" aria-hidden="true"></span><span class="p">16,90</span></div><p class="b">Mozzarella · Tomatensoße · Kirschtomaten · Rucola · Büffelmozzarella · Grana Padano</p></div><div class="pos"><div class="zeile"><span class="n">Salmone</span><span class="fuell" aria-hidden="true"></span><span class="p">17,50</span></div><p class="b">Mozzarella · Geräucherter Lachs · Zucchini · Kirschtomaten · Stracciatella</p></div><div class="pos"><div class="zeile"><span class="n">Calabrese</span><span class="fuell" aria-hidden="true"></span><span class="p">14,90</span></div><p class="b">Mozzarella · Tomatensoße · Scharfe Salami · Champignons · Zwiebeln · Geräucherter Käse</p></div><div class="pos"><div class="zeile"><span class="n">Paesana</span><span class="fuell" aria-hidden="true"></span><span class="p">14,00</span></div><p class="b">Mozzarella · Tomatensoße · Salami · Schinken · Champignons</p></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Pizza</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><div class="pos"><div class="zeile"><span class="n">Tonno</span><span class="fuell" aria-hidden="true"></span><span class="p">14,90</span></div><p class="b">Mozzarella · Tomatensoße · Thunfisch · Oliven · Zwiebeln</p></div><div class="pos"><div class="zeile"><span class="n">Capricciosa</span><span class="fuell" aria-hidden="true"></span><span class="p">14,90</span></div><p class="b">Mozzarella · Tomatensoße · Schinken · Oliven · Champignons · Artischocken</p></div><div class="pos"><div class="zeile"><span class="n">Regina</span><span class="fuell" aria-hidden="true"></span><span class="p">17,90</span></div><p class="b">Mozzarella · Kirschtomaten · Zucchini · Shrimps · Burrata · Pistazien</p></div><div class="pos"><div class="zeile"><span class="n">Quattro Stagioni</span><span class="fuell" aria-hidden="true"></span><span class="p">14,90</span></div><p class="b">Mozzarella · Tomatensoße · Salami · Schinken · Artischocken · Champignons</p></div><div class="pos"><div class="zeile"><span class="n">Afumicata</span><span class="fuell" aria-hidden="true"></span><span class="p">15,90</span></div><p class="b">Mozzarella · Tomatensoße · Geräucherter Rohschinken · Geräucherter Käse · Grana Padano</p></div><div class="pos"><div class="zeile"><span class="n">Parma</span><span class="fuell" aria-hidden="true"></span><span class="p">17,50</span></div><p class="b">Mozzarella · Tomatensoße · Parmaschinken · Rucola · Kirschtomaten · Grana Padano</p></div><div class="pos"><div class="zeile"><span class="n">Salsiccia</span><span class="fuell" aria-hidden="true"></span><span class="p">16,90</span></div><p class="b">Mozzarella · Salsiccia mit Fenchel · Lauchzwiebeln · Champignons · Getrocknete Tomaten</p></div><div class="pos"><div class="zeile"><span class="n">Bresaola</span><span class="fuell" aria-hidden="true"></span><span class="p">17,50</span></div><p class="b">Mozzarella · Tomatensoße · Luftgetrockneter Rinderschinken · Rucola · Kirschtomaten · Grana Padano</p></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Pizza</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><div class="pos"><div class="zeile"><span class="n">Vegetale</span><span class="fuell" aria-hidden="true"></span><span class="p">14,90</span></div><p class="b">Mozzarella · Tomatensoße · Zucchini · Kirschtomaten · Champignons · Zwiebeln · Oliven · Paprika</p></div><div class="pos"><div class="zeile"><span class="n">Marinara</span><span class="fuell" aria-hidden="true"></span><span class="p">14,00</span></div><p class="b">Ohne Mozzarella · Tomatensoße · Knoblauch · Sardellen · Kapern · Olivenöl · Oregano</p></div><div class="pos"><div class="zeile"><span class="n">Speciale</span><span class="fuell" aria-hidden="true"></span><span class="p">15,50</span></div><p class="b">Mozzarella · Gorgonzola · Abate-Birne · Walnuss · Grana Padano</p></div><div class="pos"><div class="zeile"><span class="n">Mare</span><span class="fuell" aria-hidden="true"></span><span class="p">17,90</span></div><p class="b">Mozzarella · Tomatensoße · Meeresfrüchte · Knoblauch · Olivenöl</p></div><div class="pos"><div class="zeile"><span class="n">Carpe Diem</span><span class="fuell" aria-hidden="true"></span><span class="p">17,50</span></div><p class="b">Mozzarella · Zucchinicreme · Getrocknete Tomaten · Shrimps · Stracciatella</p></div><div class="pos"><div class="zeile"><span class="n">Diavola</span><span class="fuell" aria-hidden="true"></span><span class="p">14,00</span></div><p class="b">Mozzarella · Tomatensoße · Scharfe Salami · Jalapeños · Champignons</p></div><div class="pos"><div class="zeile"><span class="n">Quattro Formaggi</span><span class="fuell" aria-hidden="true"></span><span class="p">14,50</span></div><p class="b">Mozzarella · Tomatensoße · Gorgonzola · Geräucherter Käse · Grana Padano</p></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Carne</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="hinweis kopf">Weitere Zutaten auf Wunsch: 1 bis 3 €, je nach Zutat.</p><p class="gruppe">Pute</p><div class="pos"><div class="zeile"><span class="n">Tacchino Griglia</span><span class="fuell" aria-hidden="true"></span><span class="p">21,00</span></div><p class="b">Putenbrustfilet vom Grill · Gemischter Salat · Kräuterbutter · Zitrone</p></div><div class="pos"><div class="zeile"><span class="n">Tacchino alla Romana</span><span class="fuell" aria-hidden="true"></span><span class="p">22,00</span></div><p class="b">Putenschnitzel · Gemüse · Tomaten-Sahnesoße · Spaghetti · Knoblauch</p></div><p class="gruppe">Schwein</p><div class="pos"><div class="zeile"><span class="n">Scaloppini Funghi</span><span class="fuell" aria-hidden="true"></span><span class="p">21,00</span></div><p class="b">Schweineschnitzel · Braune Champignons · Sahnesoße · Pommes Home Style</p></div><div class="pos"><div class="zeile"><span class="n">Scaloppini Griglia</span><span class="fuell" aria-hidden="true"></span><span class="p">20,00</span></div><p class="b">Schweineschnitzel vom Grill · Bratkartoffeln · Kräuterbutter</p></div><p class="gruppe">Rind <small>Rumpsteak 280 g</small></p><div class="pos"><div class="zeile"><span class="n">Bistecca alla Griglia</span><span class="fuell" aria-hidden="true"></span><span class="p">28,50</span></div><p class="b">Rumpsteak 280 g · Bratkartoffeln · Kräuterbutter · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Bistecca ai Funghi</span><span class="fuell" aria-hidden="true"></span><span class="p">29,50</span></div><p class="b">Rumpsteak 280 g · Braune Champignons · Sahnesoße · Knoblauch · Fettuccelle · Beilagensalat</p></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Carne</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Rind <small>Fortsetzung</small></p><div class="pos"><div class="zeile"><span class="n">Tagliata di Manzo</span><span class="fuell" aria-hidden="true"></span><span class="p">29,50</span></div><p class="b">Rumpsteak 280 g · Rucola · Grana Padano · Balsamico-Creme · Kirschtomaten · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Bistecca alla Gorgonzola</span><span class="fuell" aria-hidden="true"></span><span class="p">29,50</span></div><p class="b">Rumpsteak 280 g · Gorgonzola · Sahnesoße · Geräucherter Käse · Spaghetti · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Zwiebelrostbraten</span><span class="tag">Die Bratensoße enthält Schwein</span><span class="fuell" aria-hidden="true"></span><span class="p">29,50</span></div><p class="b">Rumpsteak 280 g · Zwiebelbratensoße · Spätzle · Beilagensalat</p></div><p class="gruppe">Kalb</p><div class="pos"><div class="zeile"><span class="n">Piccata Milanese</span><span class="fuell" aria-hidden="true"></span><span class="p">26,90</span></div><p class="b">Kalbfleisch in Parmesan-Eipanade · Tomatensoße · Parmigiano Reggiano · Spaghetti · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Scaloppine al Limone</span><span class="fuell" aria-hidden="true"></span><span class="p">25,50</span></div><p class="b">Kalbfleisch · Zitronen-Sahnesoße · Linguine · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Saltimbocca alla Romana</span><span class="fuell" aria-hidden="true"></span><span class="p">26,90</span></div><p class="b">Kalbfleisch · Parmaschinken · Salbei · Weißweinsoße · Bratkartoffeln · Beilagensalat</p></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Pesce</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="hinweis kopf">Weitere Zutaten auf Wunsch: 1 bis 3 €, je nach Zutat.</p><div class="pos"><div class="zeile"><span class="n">Spada alla Griglia</span><span class="fuell" aria-hidden="true"></span><span class="p">28,50</span></div><p class="b">Schwertfischfilet vom Grill · Zitrone · Bratgemüse · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Polpo alla Griglia</span><span class="fuell" aria-hidden="true"></span><span class="p">29,00</span></div><p class="b">Oktopus vom Grill · Zitrone · Bratkartoffeln · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Calamari Fritti</span><span class="fuell" aria-hidden="true"></span><span class="p">24,90</span></div><p class="b">Frisch panierte Tintenfischringe · Zitrone · Remoulade · Salat</p></div><div class="pos"><div class="zeile"><span class="n">Salmone alla Griglia</span><span class="fuell" aria-hidden="true"></span><span class="p">25,90</span></div><p class="b">Norwegischer Lachs vom Grill · Bratgemüse · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Gamberoni Cognac</span><span class="fuell" aria-hidden="true"></span><span class="p">29,50</span></div><p class="b">Riesengarnelen · Cognac · Tomaten-Sahnesoße · Knoblauch · Roter Pfeffer · Spaghetti · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Gamberoni Griglia</span><span class="fuell" aria-hidden="true"></span><span class="p">28,00</span></div><p class="b">Riesengarnelen · Knoblauch · Butter · Linguine · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Orata alla Mediterranea</span><span class="fuell" aria-hidden="true"></span><span class="p">28,50</span></div><p class="b">Gebratene Goldbrasse · Kirschtomaten · Knoblauch · Oliven · Kapern · Zwiebeln · Linguine · Beilagensalat</p></div><div class="pos"><div class="zeile"><span class="n">Grigliata di Pesce</span><span class="tag">für 2 Personen</span><span class="fuell" aria-hidden="true"></span><span class="p">68,00</span></div><p class="b">Gegrillter Oktopus · Lachs · Gambas · Schwertfisch · Tintenfisch · Knoblauch · Bratgemüse · Beilagensalat</p></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Kinder</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><div class="pos"><div class="zeile"><span class="n">Putenschnitzel Grill</span><span class="fuell" aria-hidden="true"></span><span class="p">11,50</span></div><p class="b">Putenschnitzel mit Bratkartoffeln</p></div><div class="pos"><div class="zeile"><span class="n">Rigatoni Bosco</span><span class="fuell" aria-hidden="true"></span><span class="p">8,50</span></div><p class="b">Nudeln mit Champignon-Sahnesoße</p></div><div class="pos"><div class="zeile"><span class="n">Rigatoni Pomodoro</span><span class="fuell" aria-hidden="true"></span><span class="p">8,50</span></div><p class="b">Nudeln mit Tomatensoße</p></div><div class="pos"><div class="zeile"><span class="n">Hühnchen Nuggets</span><span class="fuell" aria-hidden="true"></span><span class="p">9,50</span></div><p class="b">Hühnchen-Nuggets mit Pommes</p></div><p class="gruppe">Säfte für die Kleinen</p><div class="pos"><div class="zeile"><span class="n">Apfel- oder Orangensaft</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Johannisbeernektar</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Kirschnektar</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Bananennektar</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Saftschorle</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,30</span></div></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Dolci</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><div class="pos"><div class="zeile"><span class="n">Tiramisù</span><span class="fuell" aria-hidden="true"></span><span class="p">7,90</span></div><p class="b">Italienisches Dessert mit Löffelbiskuit, Espresso und Mascarponecreme, mit Kakao bestäubt</p></div><div class="pos"><div class="zeile"><span class="n">Panna Cotta</span><span class="fuell" aria-hidden="true"></span><span class="p">7,90</span></div><p class="b">Cremiges Dessert auf Sahne und Vanille, mit Erdbeer- oder Schokoladentopping</p></div><div class="pos"><div class="zeile"><span class="n">Tartufo Nero</span><span class="fuell" aria-hidden="true"></span><span class="p">7,90</span></div><p class="b">Eisdessert aus Schokoladen- und Haselnusseis, mit flüssigem Schokoladenkern</p></div><div class="pos"><div class="zeile"><span class="n">Tartufo Pistacchio</span><span class="fuell" aria-hidden="true"></span><span class="p">7,90</span></div><p class="b">Eisdessert aus Pistazieneis, umhüllt von gehackten Pistazien</p></div><div class="kapitel"><h3>Bevande</h3></div><p class="gruppe">Biere</p><div class="pos"><div class="zeile"><span class="n">Ratskeller Pils</span><span class="tag">Fass · 0,3 / 0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,90 / 4,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Hefeweizen</span><span class="tag">Fass · 0,3 / 0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,90 / 4,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Radler</span><span class="tag">0,3 / 0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,90 / 4,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Cola-Bier</span><span class="tag">0,3 / 0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,90 / 4,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Colaweizen</span><span class="tag">0,3 / 0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,90 / 4,90</span></div></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Bevande</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Biere <small>Fortsetzung</small></p><div class="pos"><div class="zeile"><span class="n">Kristallweizen</span><span class="tag">0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Dunkel Hefeweizen</span><span class="tag">0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Gründer Bier</span><span class="tag">0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Klosterbräu Hell</span><span class="tag">0,33 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,20</span></div></div><div class="pos"><div class="zeile"><span class="n">Klosterbräu Dunkel</span><span class="tag">0,33 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,20</span></div></div><div class="pos"><div class="zeile"><span class="n">Alkoholfreies Pils</span><span class="tag">0,33 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,20</span></div></div><div class="pos"><div class="zeile"><span class="n">Alkoholfreies Radler</span><span class="tag">0,33 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,20</span></div></div><div class="pos"><div class="zeile"><span class="n">Alkoholfreies Hefeweizen</span><span class="tag">0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,90</span></div></div><p class="gruppe">Erfrischendes</p><div class="pos"><div class="zeile"><span class="n">Coca-Cola</span><span class="tag">0,3 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Coca-Cola Light</span><span class="tag">0,3 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Coca-Cola Zero</span><span class="tag">0,3 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Fanta</span><span class="tag">0,3 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Sprite</span><span class="tag">0,3 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Eistee Zitrone</span><span class="tag">0,3 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Eistee Pfirsich</span><span class="tag">0,3 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,80</span></div></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Bevande</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Erfrischendes <small>Fortsetzung</small></p><div class="pos"><div class="zeile"><span class="n">Bionade Holunder</span><span class="tag">0,33 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,00</span></div></div><div class="pos"><div class="zeile"><span class="n">Bitter Lemon</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,70</span></div></div><div class="pos"><div class="zeile"><span class="n">Tonic Water</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,70</span></div></div><div class="pos"><div class="zeile"><span class="n">Ginger Ale</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,70</span></div></div><p class="gruppe">Wasser</p><div class="pos"><div class="zeile"><span class="n">Bad Liebenzell Still</span><span class="tag">0,25 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,40</span></div></div><div class="pos"><div class="zeile"><span class="n">Bad Liebenzell Classic</span><span class="tag">0,25 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,40</span></div></div><div class="pos"><div class="zeile"><span class="n">Bad Liebenzell Still</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">5,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Bad Liebenzell Classic</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">5,80</span></div></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Bevande</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Säfte</p><div class="pos"><div class="zeile"><span class="n">Saftschorle</span><span class="tag">0,3 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Apfel oder Orange</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Kirsche</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Johannisbeere</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Banane</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">3,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Holunderschorle</span><span class="tag">0,3 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,00</span></div></div><div class="pos"><div class="zeile"><span class="n">Spezi</span><span class="fuell" aria-hidden="true"></span><span class="p">4,00</span></div></div><p class="gruppe">Aperitif</p><div class="pos"><div class="zeile"><span class="n">Prosecco</span><span class="tag">0,1 l</span><span class="fuell" aria-hidden="true"></span><span class="p">4,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Hugo</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">7,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Lillet Wild Berry</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">7,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Aperol Spritz</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">7,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Limoncello Spritz</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">7,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Campari Soda</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">6,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Campari Orange</span><span class="tag">0,2 l</span><span class="fuell" aria-hidden="true"></span><span class="p">7,50</span></div></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Bevande</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Heißgetränke</p><div class="pos"><div class="zeile"><span class="n">Caffè</span><span class="fuell" aria-hidden="true"></span><span class="p">3,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Espresso</span><span class="fuell" aria-hidden="true"></span><span class="p">2,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Doppelter Espresso</span><span class="fuell" aria-hidden="true"></span><span class="p">4,20</span></div></div><div class="pos"><div class="zeile"><span class="n">Espresso Corretto</span><span class="fuell" aria-hidden="true"></span><span class="p">4,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Cappuccino</span><span class="fuell" aria-hidden="true"></span><span class="p">4,00</span></div></div><div class="pos"><div class="zeile"><span class="n">Milchkaffee</span><span class="fuell" aria-hidden="true"></span><span class="p">4,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Latte Macchiato</span><span class="fuell" aria-hidden="true"></span><span class="p">4,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Heiße Schokolade mit Sahne</span><span class="fuell" aria-hidden="true"></span><span class="p">4,20</span></div></div><div class="pos"><div class="zeile"><span class="n">Tee Gschwendner</span><span class="fuell" aria-hidden="true"></span><span class="p">4,00</span></div><p class="b">Schwarz · Früchte · Kamille · Pfefferminz · Kräuter · Grün</p></div><div class="pos"><div class="zeile"><span class="n">Frischer Pfefferminztee</span><span class="fuell" aria-hidden="true"></span><span class="p">4,50</span></div></div><p class="gruppe">Digestif</p><div class="pos"><div class="zeile"><span class="n">Ramazzotti</span><span class="tag">4 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">4,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Averna</span><span class="tag">4 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">4,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Grappa di Prosecco</span><span class="tag">2 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">5,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Grappa</span><span class="tag">2 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">4,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Limoncello</span><span class="tag">4 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">4,80</span></div></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Bevande</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Digestif <small>Fortsetzung</small></p><div class="pos"><div class="zeile"><span class="n">Amaretto</span><span class="tag">2 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">3,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Sambuca</span><span class="tag">2 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">3,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Williams Birne</span><span class="tag">2 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">3,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Jägermeister</span><span class="tag">2 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">3,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Fernet Branca</span><span class="tag">4 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">4,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Johnnie Walker</span><span class="tag">4 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">4,80</span></div></div><div class="pos"><div class="zeile"><span class="n">Vecchia Romagna</span><span class="tag">2 cl</span><span class="fuell" aria-hidden="true"></span><span class="p">4,80</span></div></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Vino</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Rot · Flasche</p><div class="pos"><div class="zeile"><span class="n">Primitivo di Manduria</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">31,00</span></div><p class="b">Reift nach der Gärung sechs Monate in großen Holzfässern, was ihm Fülle, aber keine spürbaren Tannine verleiht. Intensiv und satt, mit Aromen von schwarzen Kirschen, Brombeere, Ingwer und Vanille.</p></div><div class="pos"><div class="zeile"><span class="n">Barbera d’Alba D.O.C. Valdinera</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">32,00</span></div><p class="b">Ein typischer, ehrlicher Wein. Im Aroma intensiv und weinig, mit den klassischen Noten eines Barbera.</p></div><div class="pos"><div class="zeile"><span class="n">Vardè Riserva D.O.C.</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">48,00</span></div><p class="b">Tiefes Rubinrot mit violetten Reflexen und dichter Konsistenz. In der Nase ein intensives Spiel reifer, dunkler Früchte wie Amarena-Kirsche, ergänzt durch würzige Noten von Lakritz und schwarzem Pfeffer.</p></div><div class="pos"><div class="zeile"><span class="n">Ronchedone Rosso</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">47,00</span></div><p class="b">Ca’ dei Frati. Kräftig und aromatisch, mit Noten von dunklen Beeren, Kirschen und feinen Gewürzen. Perfekt zu gegrilltem Fleisch und herzhaften Gerichten.</p></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Vino</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Rot · offen 0,2 l</p><div class="pos"><div class="zeile"><span class="n">Nero d’Avola</span><span class="fuell" aria-hidden="true"></span><span class="p">6,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Montepulciano</span><span class="fuell" aria-hidden="true"></span><span class="p">6,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Primitivo</span><span class="fuell" aria-hidden="true"></span><span class="p">6,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Merlot</span><span class="fuell" aria-hidden="true"></span><span class="p">6,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Lambrusco</span><span class="fuell" aria-hidden="true"></span><span class="p">6,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Weinschorle</span><span class="fuell" aria-hidden="true"></span><span class="p">5,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Wein 0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">13,00</span></div></div><p class="gruppe">Rosé · Flasche</p><div class="pos"><div class="zeile"><span class="n">Five Roses</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">29,00</span></div><p class="b">Leone de Castris. Das Bukett erinnert an Kirschen und Erdbeeren. Im Geschmack frisch, trocken und weich, mit angenehmer Struktur.</p></div><div class="pos"><div class="zeile"><span class="n">A Pois I.G.T.</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">29,00</span></div><p class="b">Fontezoppa. Fruchtig und lebendig am Gaumen, mit feinem Tannin, intensiver Mineralität und harmonischer Balance. Vielseitiger Speisebegleiter, ideal zu rohem Fisch, leichten Meeresfrüchtegerichten, Fleisch-Vorspeisen oder Pizza.</p></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Vino</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Rosé · Flasche <small>Fortsetzung</small></p><div class="pos"><div class="zeile"><span class="n">Rosa dei Frati</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">34,00</span></div><p class="b">Ca’ dei Frati. Frisch und elegant, mit Noten von Beeren und Zitrus. Perfekt zu Antipasti, Fisch und leichten Gerichten.</p></div><div class="pos"><div class="zeile"><span class="n">Bardolino Chiaretto</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">24,00</span></div><p class="b">Leuchtend rosa, frisch und fruchtig mit Aromen von Kirsche und roten Beeren. Leicht, elegant und erfrischend, ideal zu leichten Gerichten und Antipasti.</p></div><p class="gruppe">Rosé · offen 0,2 l</p><div class="pos"><div class="zeile"><span class="n">Bardolino Chiaretto</span><span class="fuell" aria-hidden="true"></span><span class="p">6,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Rosato</span><span class="fuell" aria-hidden="true"></span><span class="p">6,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Durbacher Weißherbst</span><span class="fuell" aria-hidden="true"></span><span class="p">6,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Weinschorle</span><span class="fuell" aria-hidden="true"></span><span class="p">5,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Wein 0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">13,00</span></div></div></div>
+            </div>
+          </div>
+
+          <div class="blatt">
+            <div class="seite dicht">
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Vino</h2>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <div class="liste"><p class="gruppe">Weiß · Flasche</p><div class="pos"><div class="zeile"><span class="n">Lugana Bulgarini</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">35,00</span></div><p class="b">Strohgelb mit brillanten Goldreflexen, fruchtiges Bukett mit Aprikosen- und Pfirsichnoten, weicher und lang anhaltender Geschmack.</p></div><div class="pos"><div class="zeile"><span class="n">Vardì Verdicchio</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">29,00</span></div><p class="b">Fontezoppa. Heller Weißwein mit strohgelben und grünen Reflexen. Frische Noten von weißen Blüten, Pfirsich und einem Hauch Jasmin, mineralisch und ausgewogen mit langem, lebendigem Abgang. Perfekt zu Meeresfrüchten, Fisch oder leichten Vorspeisen.</p></div><div class="pos"><div class="zeile"><span class="n">Sauvignon Sankt Paul</span><span class="tag">0,75 l</span><span class="fuell" aria-hidden="true"></span><span class="p">30,00</span></div><p class="b">Typische Sortenaromatik nach Stachelbeeren, Holunder und exotischen Früchten.</p></div><p class="gruppe">Weiß · offen 0,2 l</p><div class="pos"><div class="zeile"><span class="n">Lugana</span><span class="fuell" aria-hidden="true"></span><span class="p">8,00</span></div></div><div class="pos"><div class="zeile"><span class="n">Sauvignon</span><span class="fuell" aria-hidden="true"></span><span class="p">6,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Pinot Grigio</span><span class="fuell" aria-hidden="true"></span><span class="p">6,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Chardonnay</span><span class="fuell" aria-hidden="true"></span><span class="p">6,90</span></div></div><div class="pos"><div class="zeile"><span class="n">Weinschorle</span><span class="fuell" aria-hidden="true"></span><span class="p">5,50</span></div></div><div class="pos"><div class="zeile"><span class="n">Wein 0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">13,00</span></div></div><div class="pos"><div class="zeile"><span class="n">Lugana 0,5 l</span><span class="fuell" aria-hidden="true"></span><span class="p">15,00</span></div></div></div>
+            </div>
+            <div class="seite dicht hinterseite">
+              <div class="emb"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-olive"/></svg></div>
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <p class="gross" style="margin-top:auto;margin-bottom:auto">Buon appetito.</p>
+            </div>
+          </div>
+          <!-- KARTE:END -->
+
+          <!-- Blatt 3: Reservierung | Grazie -->
+          <div class="blatt">
+            <div class="seite">
+              <div class="emb"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-uhr"/></svg></div>
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <h2>Buona serata</h2>
+              <p class="unter">Öffnungszeiten</p>
+              <div class="mzeiten">
+                <div><span>Montag</span><span>Ruhetag</span></div>
+                <div><span>Dienstag bis Donnerstag</span><span>17:00 bis 22:30 Uhr</span></div>
+                <div><span>Freitag</span><span>17:00 bis 24:00 Uhr</span></div>
+                <div><span>Samstag</span><span>11:30 bis 24:00 Uhr</span></div>
+                <div><span>Sonntag</span><span>11:30 bis 22:30 Uhr</span></div>
+              </div>
+            </div>
+            <div class="seite hinterseite ende">
+              <div class="emb"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-glas"/></svg></div>
+              <p class="folio"><img src="logo/opera-nav.webp" alt="Opera"></p>
+              <p class="gross">Grazie e a presto.</p>
+              <img class="trenner" src="art/trenner.webp" alt="" aria-hidden="true">
+              <p class="mkontakt">+49 7231 2039962<small>Altstädter Kirchenweg 3, 75175 Pforzheim</small></p>
+              <a class="knopf" href="#kontakt">Tisch reservieren</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stapel" id="stapel" aria-label="Speisekarte"></div>
+
+  <div>
+    <div class="steuerung">
+      <button class="pfeil" id="zurueck" type="button" aria-label="Zurück"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="punkte" id="punkte"></div>
+      <button class="pfeil" id="weiter" type="button" aria-label="Weiter"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <p class="tipp">Klicken Sie auf eine Seite oder nutzen Sie die Pfeiltasten.</p>
+  </div>
+</section>
+
+<section id="haus">
+  <div class="schmal haus">
+    <div class="bild"><div class="rahmen"><video autoplay muted loop playsinline preload="metadata" poster="video/orata-hoch.jpg" width="810" height="1440" aria-hidden="true"><source src="video/orata-hoch.mp4" type="video/mp4"></video></div></div>
+    <div>
+      <h2>Die Bühne <span class="gold">ist bereitet.</span></h2>
+      <p>Entdecken Sie im Opera italienische Klassiker von Antipasti und Pizza bis zu feinen Fischgerichten. Ob Dinner zu zweit, Familienfeier oder Geschäftsessen – wir freuen uns auf Ihren Besuch.</p>
+      <p>Jetzt <a href="tel:+4972312039962">telefonisch</a> oder per <a href="https://wa.me/4972312039962" target="_blank" rel="noopener">WhatsApp</a> reservieren.</p>
+      <div class="fakten">
+        <div><b>Küche</b><span>Italienisch: Pasta, Pizza, Fleisch und Fisch</span></div>
+        <div><b>Altstadt</b><span>Altstädter Kirchenweg 3</span></div>
+        <div><b>Di bis So</b><span>Montag Ruhetag</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="galerie" id="galerie" aria-label="Galerie">
+  <div class="schmal">
+    <div class="kopfzeile">
+      <h2>Aus unserer <span class="gold">Küche.</span></h2>
+      <p>Was bei uns auf den Tisch kommt, frisch zubereitet und im Kerzenlicht serviert.</p>
+    </div>
+    <div class="raster">
+      <figure class="foto f1"><button type="button" class="auf" data-i="0" data-gross="foto/galerie/01-pizza-rustico-1920.webp" data-t="Pizza" data-k="Pizza" data-d="" aria-label="Rustico (Pizza), Foto vergrößern"><img src="foto/galerie/01-pizza-rustico-1280.webp" width="1280" height="720" alt="Pizza Rustico mit Rucola, Kirschtomaten und Grana Padano" loading="lazy" decoding="async"></button><span class="lupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span><figcaption>Pizza</figcaption></figure>
+      <figure class="foto f2"><button type="button" class="auf" data-i="1" data-gross="foto/galerie/02-pizza-calabrese-1920.webp" data-t="Pizza" data-k="Pizza" data-d="" aria-label="Calabrese (Pizza), Foto vergrößern"><img src="foto/galerie/02-pizza-calabrese-1280.webp" width="1280" height="720" alt="Pizza Calabrese mit scharfer Salami und Champignons" loading="lazy" decoding="async"></button><span class="lupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span><figcaption>Pizza</figcaption></figure>
+      <figure class="foto f3"><button type="button" class="auf" data-i="2" data-gross="foto/galerie/03-spaghetti-frutti-di-mare-1920.webp" data-t="Pasta" data-k="Pasta" data-d="" aria-label="Frutti di Mare (Pasta), Foto vergrößern"><img src="foto/galerie/03-spaghetti-frutti-di-mare-1280.webp" width="1280" height="720" alt="Spaghetti Frutti di Mare mit Muscheln und Garnelen" loading="lazy" decoding="async"></button><span class="lupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span><figcaption>Pasta</figcaption></figure>
+      <figure class="foto f4"><button type="button" class="auf" data-i="3" data-gross="foto/galerie/04-linguine-deliziosa-1920.webp" data-t="Pasta" data-k="Pasta" data-d="" aria-label="Deliziosa (Pasta), Foto vergrößern"><img src="foto/galerie/04-linguine-deliziosa-1280.webp" width="1280" height="720" alt="Linguine Deliziosa mit Shrimps und Burrata" loading="lazy" decoding="async"></button><span class="lupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span><figcaption>Pasta</figcaption></figure>
+      <figure class="foto f5"><button type="button" class="auf" data-i="4" data-gross="foto/galerie/05-insalata-polipo-1920.webp" data-t="Antipasti" data-k="Antipasti" data-d="" aria-label="Insalata Polipo (Antipasti), Foto vergrößern"><img src="foto/galerie/05-insalata-polipo-1280.webp" width="1280" height="720" alt="Insalata Polipo mit Oktopus und Kartoffeln" loading="lazy" decoding="async"></button><span class="lupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span><figcaption>Antipasti</figcaption></figure>
+      <figure class="foto f6"><button type="button" class="auf" data-i="5" data-gross="foto/galerie/06-insalata-burrata-1920.webp" data-t="Salate" data-k="Salate" data-d="" aria-label="Burrata (Salate), Foto vergrößern"><img src="foto/galerie/06-insalata-burrata-1280.webp" width="1280" height="720" alt="Salat mit Burrata und Parmaschinken" loading="lazy" decoding="async"></button><span class="lupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span><figcaption>Salate</figcaption></figure>
+      <figure class="foto f7"><button type="button" class="auf" data-i="6" data-gross="foto/galerie/07-pasta-carbonara-1672.webp" data-t="Pasta" data-k="Pasta" data-d="" aria-label="Carbonara (Pasta), Foto vergrößern"><img src="foto/galerie/07-pasta-carbonara-1280.webp" width="1280" height="720" alt="Spaghetti Carbonara mit knusprigem Guanciale" loading="lazy" decoding="async"></button><span class="lupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span><figcaption>Pasta</figcaption></figure>
+      <figure class="foto f8"><button type="button" class="auf" data-i="7" data-gross="foto/galerie/08-tiramisu-1920.webp" data-t="Dessert" data-k="Dessert" data-d="" aria-label="Tiramisù (Dessert), Foto vergrößern"><img src="foto/galerie/08-tiramisu-1280.webp" width="1280" height="720" alt="Tiramisù mit Kakao" loading="lazy" decoding="async"></button><span class="lupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span><figcaption>Dessert</figcaption></figure>
+    </div>
+    <p class="galerie-fuss"><a class="btn" href="#speisekarte">Die vollständige Karte ansehen</a></p>
+  </div>
+</section>
+
+<section class="kontaktleiste" id="kontaktleiste" aria-labelledby="h-kl">
+  <div class="schmal">
+    <h2 id="h-kl"><span class="gold">Kontakt</span></h2>
+    <ul class="kl">
+      <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Altst%C3%A4dter%20Kirchenweg%203%2C%2075175%20Pforzheim" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><strong>Standort</strong><small>Altstädter Kirchenweg 3,<br>75175 Pforzheim</small></a></li>
+      <li><a href="tel:+4972312039962"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span><strong>Telefon</strong><small>+49 7231 2039962</small></a></li>
+      <li><a href="mailto:rusticopforzheim@gmail.com"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><strong>E-Mail</strong><small>rusticopforzheim<wbr>@gmail.com</small></a></li>
+      <li><a href="https://wa.me/4972312039962" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/><path d="M9 9c.3 2 2.5 4.2 4.5 4.5l1-1.2 1.6.8-.3 1.2c-3 .5-7-3.5-6.5-6.5z"/></svg></span><strong>WhatsApp</strong><small>Schreiben Sie uns direkt</small></a></li>
+      <li><a href="https://www.instagram.com/" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></span><strong>Instagram</strong><small>Folgen Sie uns</small></a></li>
+      <li><a href="https://www.tiktok.com/" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.3 2.4 1.8 4 4 4.2v3a7 7 0 0 1-4-1.3V15a6 6 0 1 1-6-6c.3 0 .6 0 .9.1v3.2a3 3 0 1 0 2.1 2.9V3z"/></svg></span><strong>TikTok</strong><small>Folgen Sie uns</small></a></li>
+    </ul>
+  </div>
+</section>
+
+<section id="zeiten">
+  <div class="schmal zeiten">
+    <div class="spalte">
+      <h2>Vorstellungszeiten</h2>
+      <img class="orn" src="art/trenner.webp" alt="" aria-hidden="true">
+      <ul id="tage">
+        <li class="zu"><span>Montag</span><span>Ruhetag</span></li>
+        <li><span>Dienstag</span><span>17:00 bis 22:30 Uhr</span></li>
+        <li><span>Mittwoch</span><span>17:00 bis 22:30 Uhr</span></li>
+        <li><span>Donnerstag</span><span>17:00 bis 22:30 Uhr</span></li>
+        <li><span>Freitag</span><span>17:00 bis 24:00 Uhr</span></li>
+        <li><span>Samstag</span><span>11:30 bis 24:00 Uhr</span></li>
+        <li><span>Sonntag</span><span>11:30 bis 22:30 Uhr</span></li>
+      </ul>
+    </div>
+    <div class="karte" id="kontakt">
+      <img class="logo" src="logo/opera-nav.webp" alt="Opera">
+      <h3 class="gold">Reservieren Sie Ihren Platz</h3>
+      <p>Am Wochenende ist das Haus schnell voll. Rufen Sie uns an, auch für Feiern und Gruppen.</p>
+      <a class="nummer" href="tel:+4972312039962">+49 7231 2039962</a>
+      <div class="knoepfe">
+        <a class="btn voll" href="tel:+4972312039962">Jetzt anrufen</a>
+        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Altst%C3%A4dter%20Kirchenweg%203%2C%2075175%20Pforzheim" target="_blank" rel="noopener">Route anzeigen</a>
+      </div>
+      <address>Altstädter Kirchenweg 3<br>75175 Pforzheim</address>
+    </div>
+  </div>
+</section>
+</main>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Galerie" aria-hidden="true">
+  <button type="button" class="zu" aria-label="Schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <button type="button" class="vor" aria-label="Vorheriges Foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button type="button" class="weiter" aria-label="Nächstes Foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  <figure><img id="lb-img" alt=""></figure>
+  <div class="unter"><b id="lb-t"></b><span id="lb-d"></span><i id="lb-n"></i></div>
+</div>
+
+
+<footer>
+  <img class="orn" src="art/trenner.webp" alt="" aria-hidden="true">
+  <div class="fgrid">
+    <div class="fmarke">
+      <img src="logo/opera-nav.webp" alt="Opera">
+      <p>Restaurant und Pizzeria im Herzen von Pforzheim.</p>
+    </div>
+    <nav aria-label="Navigation">
+      <h4>Entdecken</h4>
+      <ul>
+        <li><a href="#haus">Das Haus</a></li>
+        <li><a href="#speisekarte">Die Karte</a></li>
+        <li><a href="#galerie">Die Küche</a></li>
+        <li><a href="#zeiten">Öffnungszeiten</a></li>
+        <li><a href="#kontakt">Reservierung</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h4>Besuchen Sie uns</h4>
+      <address>Altstädter Kirchenweg 3<br>75175 Pforzheim</address>
+      <a class="fnr" href="tel:+4972312039962">+49 7231 2039962</a>
+      <div class="soz"><a href="https://www.instagram.com/" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a><a href="https://www.tiktok.com/" aria-label="TikTok" title="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.3 2.4 1.8 4 4 4.2v3a7 7 0 0 1-4-1.3V15a6 6 0 1 1-6-6c.3 0 .6 0 .9.1v3.2a3 3 0 1 0 2.1 2.9V3z"/></svg></a><a href="https://wa.me/4972312039962" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/><path d="M9 9c.3 2 2.5 4.2 4.5 4.5l1-1.2 1.6.8-.3 1.2c-3 .5-7-3.5-6.5-6.5z"/></svg></a><a href="tel:+4972312039962" aria-label="Anrufen" title="Anrufen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a><a href="https://www.google.com/maps/search/?api=1&query=Altst%C3%A4dter%20Kirchenweg%203%2C%2075175%20Pforzheim" aria-label="Route anzeigen" title="Route anzeigen" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></a></div>
+    </div>
+  </div>
+  <div class="klein"><span>© 2026 Opera Pforzheim</span><a href="#">Impressum</a><a href="#">Datenschutz</a></div>
+</footer>
+
+<script>
+(()=>{
+  const nav=document.getElementById('nav');
+  const f=()=>nav.classList.toggle('solid',scrollY>40);
+  addEventListener('scroll',f,{passive:true});f();
+  // heutigen Tag hervorheben (Mo=0)
+  const i=(new Date().getDay()+6)%7, li=document.querySelectorAll('#tage li')[i];
+  if(li&&!li.classList.contains('zu'))li.classList.add('heute');
+  // Sprache: Deutsch ist der Quelltext, Englisch und Italienisch werden per Wörterbuch eingesetzt.
+  const EN={"Die Oper der": "The opera of", "italienischen Küche": "Italian cuisine","Italienisch": "Enjoy Italian", "genießen": "cuisine", "in der Pforzheimer Altstadt": "in Pforzheim's old town", "Entdecken Sie im Opera italienische Klassiker von Antipasti und Pizza bis zu feinen Fischgerichten. Ob Dinner zu zweit, Familienfeier oder Geschäftsessen – wir freuen uns auf Ihren Besuch.": "Discover Italian classics at Opera, from antipasti and pizza to fine fish dishes. Whether dinner for two, a family celebration or a business meal – we look forward to your visit.", "Jetzt": "Reserve", "telefonisch": "by phone", "oder per": "or via", "reservieren.": "now.","Das Opera ist Restaurant und Pizzeria in der Pforzheimer Altstadt. Die Karte reicht von Antipasti, Pasta und Pizza bis zu Fleisch- und Fischgerichten, Desserts und einer Auswahl an Weinen.": "Opera is a restaurant and pizzeria in Pforzheim's old town. The menu ranges from antipasti, pasta and pizza to meat and fish dishes, desserts and a selection of wines.", "Ob Abendessen zu zweit, Familienfeier oder Firmenessen: Wir freuen uns auf Ihren Besuch und reservieren Ihren Tisch gern telefonisch oder per WhatsApp.": "Whether a dinner for two, a family celebration or a business lunch: we look forward to your visit and are happy to reserve your table by phone or WhatsApp.", "Willkommen im Opera: italienische Küche, Pasta und Pizza in der Pforzheimer Altstadt.": "Welcome to Opera: Italian cuisine, pasta and pizza in Pforzheim's old town.", "Küche": "Cuisine", "Italienisch: Pasta, Pizza, Fleisch und Fisch": "Italian: pasta, pizza, meat and fish", "Di bis So": "Tue to Sun", "Montag Ruhetag": "Closed on Mondays","Die vollständige Karte ansehen": "View the full menu", "Schließen": "Close", "Vorheriges Foto": "Previous photo", "Nächstes Foto": "Next photo", "Galerie": "Gallery","Kontakt": "Contact", "Standort": "Location", "Telefon": "Phone", "E-Mail": "Email", "Schreiben Sie uns direkt": "Message us directly", "Folgen Sie uns": "Follow us","Salate": "Salads", "Nudelgerichte": "Pasta dishes", "Klassiker und Kreationen": "Classics and creations", "Fleisch": "Meat", "Fisch & Meeresfrüchte": "Fish & seafood", "Für unsere kleinen Gäste": "For our little guests", "Dessert": "Dessert", "Getränke": "Drinks", "Unsere Weinempfehlung": "Our wine recommendation", "Alle Preise in Euro.": "All prices in euros.", "Fortsetzung": "continued","Menü":"Menu","Die Karte":"The Menu","Die Küche":"The Kitchen","Reservierung":"Reservations","Die Oper der italienischen Küche":"The opera of Italian cuisine","Restaurant und Pizzeria im Herzen von Pforzheim":"Restaurant and pizzeria in the heart of Pforzheim","Das Haus":"The House","Speisekarte":"Menu","Öffnungszeiten":"Opening hours","Anfahrt":"Directions","Italienische Tafelkultur":"Italian table culture","im Herzen von Pforzheim":"in the heart of Pforzheim","Tisch reservieren":"Reserve a table","Speisekarte ansehen":"View the menu","Willkommen im Opera":"Welcome to Opera","Im Opera deckt die Küche, was Italien am besten kann: Teig, der im Steinofen aufgeht, Fisch, der kurz gegart wird, und Saucen, die Zeit bekommen.":"At Opera, the kitchen does what Italy does best: dough that rises in the stone oven, fish cooked briefly, and sauces that are given time.","Jeder Gast ist bei uns ein Ehrengast, jeder Abend ein Auftritt.":"Every guest is a guest of honour, every evening a performance.","Vorspeisen":"Starters","Carpaccio vom Rind":"Beef carpaccio","Rucola, Parmesan, Zitronenöl":"Rocket, Parmesan, lemon oil","Burrata mit Tomaten":"Burrata with tomatoes","Reife Tomaten, Basilikum, Olivenöl":"Ripe tomatoes, basil, olive oil","Gebratener Lachs auf Brot":"Seared salmon on bread","Frischkäse, Kräuter, Microgreens":"Cream cheese, herbs, microgreens","Geröstetes Brot, Tomaten, Knoblauch, Basilikum":"Toasted bread, tomatoes, garlic, basil","aus dem Steinofen":"from the stone oven","San-Marzano-Tomaten, Fior di Latte, Basilikum":"San Marzano tomatoes, fior di latte, basil","Scharfe Salami, Chili, Mozzarella":"Spicy salami, chilli, mozzarella","Vier italienische Käsesorten":"Four Italian cheeses","Kochschinken, Champignons, Mozzarella":"Cooked ham, mushrooms, mozzarella","Fisch und Hauptgerichte":"Fish and main courses","Fisch des Tages":"Fish of the day","Aus der Pfanne oder vom Grill, mit Gemüse der Saison":"Pan-fried or grilled, with seasonal vegetables","Venusmuscheln, Weißwein, Knoblauch, Petersilie":"Clams, white wine, garlic, parsley","Kalbfleisch, Salbei, Parmaschinken, Weißweinsauce":"Veal, sage, Parma ham, white wine sauce","Empfehlung vom Koch":"Chef's recommendation","Wechselt wöchentlich":"Changes weekly","Süßes zum Schluss":"A sweet finish","Mascarpone, Espresso, Kakao":"Mascarpone, espresso, cocoa","Vanille, Beerensauce":"Vanilla, berry sauce","Vanilleeis, heißer Espresso":"Vanilla ice cream, hot espresso","Montag":"Monday","Dienstag":"Tuesday","Mittwoch":"Wednesday","Donnerstag":"Thursday","Freitag":"Friday","Samstag":"Saturday","Sonntag":"Sunday","Ruhetag":"Closed","Dienstag bis Donnerstag":"Tuesday to Thursday","17:00 bis 22:30 Uhr":"17:00 – 22:30","17:00 bis 24:00 Uhr":"17:00 – 24:00","11:30 bis 24:00 Uhr":"11:30 – 24:00","11:30 bis 22:30 Uhr":"11:30 – 22:30","Preise und die vollständige Karte erhalten Sie im Restaurant.":"Prices and the full menu are available at the restaurant.","Klicken Sie auf eine Seite oder nutzen Sie die Pfeiltasten.":"Click a page or use the arrow keys.","Vorhang auf.":"Curtain up.","Die Bühne":"The stage","ist bereitet.":"is set.","Gedämpftes Licht, dunkles Holz, Samt und Gold. Ob zu zweit, mit der Familie oder zum Firmenessen: Hier wird aus einem Essen ein Abend.":"Soft light, dark wood, velvet and gold. Whether for two, with the family or for a business dinner: here a meal becomes an evening.","Steinofen":"Stone oven","für jede Pizza":"for every pizza","Altstadt":"Old town","Täglich frisch":"Fresh daily","Empfehlungen vom Koch":"Chef's recommendations","Aus unserer":"From our","Küche.":"kitchen.","Was bei uns auf den Tisch kommt, frisch zubereitet und im Kerzenlicht serviert.":"What comes to our tables, freshly prepared and served by candlelight.","mit Speck und roten Zwiebeln":"with bacon and red onions","Ziegenkäse im Schinkenmantel":"Goat's cheese wrapped in ham","mit Feldsalat":"with lamb's lettuce","Ein Abend im Opera":"An evening at Opera","Gedämpftes Licht, dunkles Holz":"Soft light, dark wood","mit frischem Espresso":"with fresh espresso","Lachs auf Röstbrot":"Salmon on toast","mit Frischkäse und Dill":"with cream cheese and dill","mit lauwarmem Kartoffelsalat":"with warm potato salad","Vorstellungszeiten":"Opening hours","Reservieren Sie Ihren Platz":"Reserve your seat","Am Wochenende ist das Haus schnell voll. Rufen Sie uns an, auch für Feiern und Gruppen.":"The house fills up fast at weekends. Call us, also for celebrations and groups.","Jetzt anrufen":"Call now","Route anzeigen":"Show route","Restaurant und Pizzeria im Herzen von Pforzheim.":"Restaurant and pizzeria in the heart of Pforzheim.","Entdecken":"Discover","Galerie":"Gallery","Besuchen Sie uns":"Visit us","Impressum":"Legal notice","Datenschutz":"Privacy","Opera, Startseite":"Opera, home","Sprache":"Language","Anrufen":"Call","Willkommen":"Welcome","Zurück":"Back","Weiter":"Next","Navigation":"Navigation"};
+  const IT={"Die Oper der": "L'opera della", "italienischen Küche": "cucina italiana","Italienisch": "Gustate", "genießen": "l'Italia", "in der Pforzheimer Altstadt": "nel centro storico di Pforzheim", "Entdecken Sie im Opera italienische Klassiker von Antipasti und Pizza bis zu feinen Fischgerichten. Ob Dinner zu zweit, Familienfeier oder Geschäftsessen – wir freuen uns auf Ihren Besuch.": "Scoprite all'Opera i classici italiani, dagli antipasti e dalla pizza ai raffinati piatti di pesce. Che sia una cena a due, una festa di famiglia o un pranzo di lavoro – vi aspettiamo.", "Jetzt": "Prenotate", "telefonisch": "per telefono", "oder per": "o via", "reservieren.": "ora.","Das Opera ist Restaurant und Pizzeria in der Pforzheimer Altstadt. Die Karte reicht von Antipasti, Pasta und Pizza bis zu Fleisch- und Fischgerichten, Desserts und einer Auswahl an Weinen.": "Opera è ristorante e pizzeria nel centro storico di Pforzheim. Il menù spazia da antipasti, pasta e pizza a piatti di carne e pesce, dolci e una selezione di vini.", "Ob Abendessen zu zweit, Familienfeier oder Firmenessen: Wir freuen uns auf Ihren Besuch und reservieren Ihren Tisch gern telefonisch oder per WhatsApp.": "Che sia una cena a due, una festa di famiglia o un pranzo di lavoro: vi aspettiamo e prenotiamo volentieri il vostro tavolo per telefono o via WhatsApp.", "Willkommen im Opera: italienische Küche, Pasta und Pizza in der Pforzheimer Altstadt.": "Benvenuti all'Opera: cucina italiana, pasta e pizza nel centro storico di Pforzheim.", "Küche": "Cucina", "Italienisch: Pasta, Pizza, Fleisch und Fisch": "Italiana: pasta, pizza, carne e pesce", "Di bis So": "Mar a dom", "Montag Ruhetag": "Chiuso il lunedì","Die vollständige Karte ansehen": "Vedi il menù completo", "Schließen": "Chiudi", "Vorheriges Foto": "Foto precedente", "Nächstes Foto": "Foto successiva", "Galerie": "Galleria","Kontakt": "Contatti", "Standort": "Indirizzo", "Telefon": "Telefono", "E-Mail": "E-mail", "Schreiben Sie uns direkt": "Scrivici direttamente", "Folgen Sie uns": "Seguici","Salate": "Insalate", "Nudelgerichte": "Primi di pasta", "Klassiker und Kreationen": "Classici e creazioni", "Fleisch": "Carne", "Fisch & Meeresfrüchte": "Pesce e frutti di mare", "Für unsere kleinen Gäste": "Per i più piccoli", "Dessert": "Dolci", "Getränke": "Bevande", "Unsere Weinempfehlung": "I nostri vini consigliati", "Alle Preise in Euro.": "Tutti i prezzi in euro.", "Fortsetzung": "continua","Menü":"Menu","Die Karte":"Il Menù","Die Küche":"La Cucina","Reservierung":"Prenotazioni","Die Oper der italienischen Küche":"L'opera della cucina italiana","Restaurant und Pizzeria im Herzen von Pforzheim":"Ristorante e pizzeria nel cuore di Pforzheim","Das Haus":"La Casa","Speisekarte":"Menù","Öffnungszeiten":"Orari","Anfahrt":"Come arrivare","Italienische Tafelkultur":"La cultura italiana della tavola","im Herzen von Pforzheim":"nel cuore di Pforzheim","Tisch reservieren":"Prenota un tavolo","Speisekarte ansehen":"Vedi il menù","Willkommen im Opera":"Benvenuti all'Opera","Im Opera deckt die Küche, was Italien am besten kann: Teig, der im Steinofen aufgeht, Fisch, der kurz gegart wird, und Saucen, die Zeit bekommen.":"All'Opera la cucina fa ciò che l'Italia sa fare meglio: impasto che lievita nel forno a pietra, pesce cotto al punto giusto e salse a cui si lascia il tempo.","Jeder Gast ist bei uns ein Ehrengast, jeder Abend ein Auftritt.":"Ogni ospite è un ospite d'onore, ogni sera uno spettacolo.","Vorspeisen":"Per iniziare","Carpaccio vom Rind":"Carpaccio di manzo","Rucola, Parmesan, Zitronenöl":"Rucola, parmigiano, olio al limone","Burrata mit Tomaten":"Burrata con pomodori","Reife Tomaten, Basilikum, Olivenöl":"Pomodori maturi, basilico, olio d'oliva","Gebratener Lachs auf Brot":"Salmone scottato su pane","Frischkäse, Kräuter, Microgreens":"Formaggio fresco, erbe aromatiche, germogli","Geröstetes Brot, Tomaten, Knoblauch, Basilikum":"Pane tostato, pomodori, aglio, basilico","aus dem Steinofen":"dal forno a pietra","San-Marzano-Tomaten, Fior di Latte, Basilikum":"Pomodoro San Marzano, fior di latte, basilico","Scharfe Salami, Chili, Mozzarella":"Salame piccante, peperoncino, mozzarella","Vier italienische Käsesorten":"Quattro formaggi italiani","Kochschinken, Champignons, Mozzarella":"Prosciutto cotto, champignon, mozzarella","Fisch und Hauptgerichte":"Pesce e piatti principali","Fisch des Tages":"Pesce del giorno","Aus der Pfanne oder vom Grill, mit Gemüse der Saison":"In padella o alla griglia, con verdure di stagione","Venusmuscheln, Weißwein, Knoblauch, Petersilie":"Vongole, vino bianco, aglio, prezzemolo","Kalbfleisch, Salbei, Parmaschinken, Weißweinsauce":"Vitello, salvia, prosciutto crudo, salsa al vino bianco","Empfehlung vom Koch":"Consiglio dello chef","Wechselt wöchentlich":"Cambia ogni settimana","Süßes zum Schluss":"Un dolce finale","Mascarpone, Espresso, Kakao":"Mascarpone, caffè espresso, cacao","Vanille, Beerensauce":"Vaniglia, salsa ai frutti di bosco","Vanilleeis, heißer Espresso":"Gelato alla vaniglia, espresso caldo","Montag":"Lunedì","Dienstag":"Martedì","Mittwoch":"Mercoledì","Donnerstag":"Giovedì","Freitag":"Venerdì","Samstag":"Sabato","Sonntag":"Domenica","Ruhetag":"Chiuso","Dienstag bis Donnerstag":"Da martedì a giovedì","17:00 bis 22:30 Uhr":"17:00 – 22:30","17:00 bis 24:00 Uhr":"17:00 – 24:00","11:30 bis 24:00 Uhr":"11:30 – 24:00","11:30 bis 22:30 Uhr":"11:30 – 22:30","Preise und die vollständige Karte erhalten Sie im Restaurant.":"Prezzi e menù completo sono disponibili al ristorante.","Klicken Sie auf eine Seite oder nutzen Sie die Pfeiltasten.":"Clicca su una pagina o usa le frecce.","Vorhang auf.":"Si apre il sipario.","Die Bühne":"Il palcoscenico","ist bereitet.":"è pronto.","Gedämpftes Licht, dunkles Holz, Samt und Gold. Ob zu zweit, mit der Familie oder zum Firmenessen: Hier wird aus einem Essen ein Abend.":"Luce soffusa, legno scuro, velluto e oro. In due, in famiglia o per una cena di lavoro: qui un pasto diventa una serata.","Steinofen":"Forno a pietra","für jede Pizza":"per ogni pizza","Altstadt":"Centro storico","Täglich frisch":"Sempre fresco","Empfehlungen vom Koch":"I consigli dello chef","Aus unserer":"Dalla nostra","Küche.":"cucina.","Was bei uns auf den Tisch kommt, frisch zubereitet und im Kerzenlicht serviert.":"Ciò che arriva sulle nostre tavole, preparato al momento e servito a lume di candela.","mit Speck und roten Zwiebeln":"con pancetta e cipolla rossa","Ziegenkäse im Schinkenmantel":"Formaggio di capra avvolto nel prosciutto","mit Feldsalat":"con valeriana","Ein Abend im Opera":"Una serata all'Opera","Gedämpftes Licht, dunkles Holz":"Luce soffusa, legno scuro","mit frischem Espresso":"con caffè espresso fresco","Lachs auf Röstbrot":"Salmone su pane tostato","mit Frischkäse und Dill":"con formaggio fresco ed aneto","mit lauwarmem Kartoffelsalat":"con insalata di patate tiepida","Vorstellungszeiten":"Orari di apertura","Reservieren Sie Ihren Platz":"Riserva il tuo posto","Am Wochenende ist das Haus schnell voll. Rufen Sie uns an, auch für Feiern und Gruppen.":"Nel fine settimana il locale si riempie in fretta. Chiamaci, anche per feste e gruppi.","Jetzt anrufen":"Chiama ora","Route anzeigen":"Mostra il percorso","Restaurant und Pizzeria im Herzen von Pforzheim.":"Ristorante e pizzeria nel cuore di Pforzheim.","Entdecken":"Scopri","Galerie":"Galleria","Besuchen Sie uns":"Vieni a trovarci","Impressum":"Note legali","Datenschutz":"Privacy","Opera, Startseite":"Opera, home page","Sprache":"Lingua","Anrufen":"Chiama","Willkommen":"Benvenuti","Zurück":"Indietro","Weiter":"Avanti","Navigation":"Navigazione"};
+  const DICT={en:EN,it:IT};
+  const META={de:{d:'Opera, Restaurant und Pizzeria in Pforzheim: italienische Küche, Pasta, Pizza, Fleisch und Fisch in der Altstadt. Jetzt Tisch reservieren.'},
+             en:{d:'Opera, restaurant and pizzeria in Pforzheim: Italian cuisine, pasta, pizza, meat and fish in the old town. Reserve a table now.'},
+             it:{d:'Opera, ristorante e pizzeria a Pforzheim: cucina italiana, pasta, pizza, carne e pesce nel centro storico. Prenota un tavolo.'}};
+  const orig=new WeakMap(), norm=s=>s.replace(/\s+/g,' ').trim();
+  function setLang(l){
+    const D=DICT[l]||null;
+    const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    for(let n;n=w.nextNode();){
+      if(n.parentElement.closest('script'))continue;
+      if(!orig.has(n))orig.set(n,n.nodeValue);
+      const o=orig.get(n),k=norm(o);
+      n.nodeValue=D&&D[k]?o.replace(o.trim(),D[k]):o;
+    }
+    document.querySelectorAll('[aria-label],[title]').forEach(el=>['aria-label','title'].forEach(a=>{
+      if(!el.hasAttribute(a))return;
+      const key='data-de-'+a;if(!el.hasAttribute(key))el.setAttribute(key,el.getAttribute(a));
+      const o=el.getAttribute(key);el.setAttribute(a,D&&D[o]?D[o]:o);
+    }));
+    document.documentElement.lang=l;
+    document.querySelector('meta[name=description]').content=META[l].d;
+    document.querySelectorAll('.lang button').forEach(b=>{const on=b.dataset.l===l;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+    try{localStorage.setItem('opera.lang',l)}catch(e){}
+  }
+  window.operaLang=setLang;
+  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
+  let start='de';
+  try{start=new URLSearchParams(location.search).get('lang')||localStorage.getItem('opera.lang')||'de'}catch(e){}
+  if(DICT[start])setLang(start);
+})();
+(()=>{
+  // Buch
+  const blaetter=[...document.querySelectorAll('.blatt')], N=blaetter.length;
+  const schub=document.getElementById('schub'), neig=document.getElementById('neig');
+  const punkte=document.getElementById('punkte'), bZ=document.getElementById('zurueck'), bW=document.getElementById('weiter');
+  document.getElementById('einbandlogo').src=document.querySelector('.nav img').src;
+  let cur=0, timer=null;
+  blaetter.forEach((b,i)=>{b.style.setProperty('--i',i);b.style.setProperty('--n',N)});
+  // Telefon: jede Seite einzeln, wie ein Stapel zum Umblättern
+  const mq=matchMedia('(max-width:720px)'), stapel=document.getElementById('stapel');
+  blaetter.forEach(b=>b.querySelectorAll('.seite').forEach(s=>{
+    const k=document.createElement('div'),c=s.cloneNode(true);
+    k.className='karte2';k.style.setProperty('--p',stapel.children.length);
+    c.classList.remove('hinterseite');c.removeAttribute('id');c.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
+    k.appendChild(c);stapel.appendChild(k);
+  }));
+  const karten=[...stapel.children], M=karten.length;
+  let sd=0;
+  function punkteBauen(){
+    punkte.innerHTML='';const n=mq.matches?M:N+1;
+    for(let s=0;s<n;s++){const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',(s+1)+'/'+n);b.addEventListener('click',()=>mq.matches?stapelZu(s):gehe(s));punkte.appendChild(b)}
+  }
+  function stapelZeige(){
+    karten.forEach((k,i)=>k.classList.toggle('weg',i<sd));
+    [...punkte.children].forEach((d,s)=>{d.classList.toggle('on',s===sd);s===sd?d.setAttribute('aria-current','true'):d.removeAttribute('aria-current')});
+    punkte.dataset.z=(sd+1)+' / '+M;
+    bZ.disabled=sd===0;bW.disabled=sd===M-1;
+  }
+  function stapelZu(z){sd=Math.max(0,Math.min(M-1,z));stapelZeige()}
+  let sx=null;
+  stapel.addEventListener('pointerdown',e=>{sx=e.clientX});
+  stapel.addEventListener('pointercancel',()=>{sx=null});
+  stapel.addEventListener('pointerup',e=>{
+    if(sx===null)return;const dx=e.clientX-sx;sx=null;
+    if(!frei())return;
+    if(dx<-40)stapelZu(sd+1);else if(dx>40)stapelZu(sd-1);
+    else if(!e.target.closest('a')){const r=stapel.getBoundingClientRect();stapelZu(sd+(e.clientX-r.left<r.width*.3?-1:1))}
+  });
+  mq.addEventListener('change',()=>{punkteBauen();mq.matches?stapelZeige():zeige()});
+  if(window.operaLang)window.operaLang(document.documentElement.lang);
+  // Nur Blätter nahe der aktuellen Doppelseite (und gerade drehende) werden gezeichnet: weniger 3D-Ebenen, flüssigere Animation
+  const FLUG=1000;let sichtTimer=0;
+  function sichtbar(){
+    const t=performance.now();let spaeter=false;
+    blaetter.forEach((b,i)=>{
+      const flug=t-(b._t||-1e9)<FLUG;if(flug)spaeter=true;
+      b.style.visibility=(Math.abs(i-cur+.5)<=1.5||flug)?'':'hidden';
+    });
+    clearTimeout(sichtTimer);if(spaeter)sichtTimer=setTimeout(sichtbar,FLUG+60);
+  }
+  // Schutz gegen Mehrfachklicks: pro Seitenwechsel eine kurze Pause
+  let sperre=0;
+  const frei=()=>{const t=performance.now();if(t<sperre)return false;sperre=t+360;return true};
+  function zeige(){
+    const t=performance.now();
+    blaetter.forEach((b,i)=>{
+      const um=i<cur;if(b.classList.contains('um')!==um)b._t=t;
+      b.classList.toggle('um',um);b.style.pointerEvents=(i===cur||i===cur-1)?'':'none';
+      b.style.setProperty('--z',(um?(i-cur+1)*2:(cur-i)*2)+'px');
+    });
+    sichtbar();
+    schub.classList.toggle('zu-vorn',cur===0);
+    schub.classList.toggle('zu-hinten',cur===N);
+    [...punkte.children].forEach((d,s)=>{d.classList.toggle('on',s===cur);s===cur?d.setAttribute('aria-current','true'):d.removeAttribute('aria-current')});
+    bZ.disabled=cur===0;bW.disabled=cur===N;
+  }
+  function gehe(ziel){
+    clearInterval(timer);
+    timer=setInterval(()=>{
+      if(cur===ziel){clearInterval(timer);return}
+      cur+=ziel>cur?1:-1;zeige();
+    },cur===ziel?0:150);
+    if(cur!==ziel){cur+=ziel>cur?1:-1;zeige()}
+  }
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('[data-seite]');if(!a)return;
+    e.preventDefault();const z=+a.dataset.seite;
+    if(mq.matches)stapelZu(z);else gehe(z%2?(z+1)/2:z/2);
+  });
+  bZ.addEventListener('click',()=>{if(!frei())return;mq.matches?stapelZu(sd-1):gehe(Math.max(0,cur-1))});
+  bW.addEventListener('click',()=>{if(!frei())return;mq.matches?stapelZu(sd+1):gehe(Math.min(N,cur+1))});
+  let gewischt=false; // eine Wischgeste löst danach noch ein Klick-Ereignis aus: das darf nicht ein zweites Mal blättern
+  blaetter.forEach((b,i)=>b.addEventListener('click',e=>{
+    if(gewischt){gewischt=false;return}
+    if(e.target.closest('a')||!frei())return;
+    if(i===cur)gehe(cur+1);else if(i===cur-1)gehe(cur-1);
+  }));
+  // Pfeiltasten nur, wenn das Buch im Bild ist und nicht in einem Formularfeld getippt wird
+  const buehne=document.getElementById('speisekarte');
+  const imBild=()=>{const r=buehne.getBoundingClientRect();return r.top<innerHeight*.6&&r.bottom>innerHeight*.4};
+  addEventListener('keydown',e=>{
+    if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey||e.defaultPrevented)return;
+    const t=e.target;if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable))return;
+    if(!imBild()||e.repeat||(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')||!frei())return;
+    if(e.key==='ArrowRight')mq.matches?stapelZu(sd+1):gehe(Math.min(N,cur+1));
+    else mq.matches?stapelZu(sd-1):gehe(Math.max(0,cur-1));
+  });
+  let x0=null;
+  const tisch=document.getElementById('tisch');
+  tisch.addEventListener('pointerdown',e=>{x0=e.clientX});
+  tisch.addEventListener('pointerup',e=>{
+    if(x0===null)return;const dx=e.clientX-x0;x0=null;
+    if(Math.abs(dx)>8){gewischt=true;setTimeout(()=>{gewischt=false},150)} // Ziehen ist kein Klick
+    if(Math.abs(dx)>60&&frei()){if(dx<0)gehe(Math.min(N,cur+1));else gehe(Math.max(0,cur-1))}
+  });
+  // leichte Neigung mit der Maus
+  if(matchMedia('(min-width:721px) and (prefers-reduced-motion:no-preference)').matches){
+    let neigRaf=0,nx=0,ny=0;
+    tisch.addEventListener('pointermove',e=>{
+      nx=e.clientX;ny=e.clientY;if(neigRaf||performance.now()<sperre)return;
+      neigRaf=requestAnimationFrame(()=>{
+        neigRaf=0;const r=tisch.getBoundingClientRect(),px=(nx-r.left)/r.width-.5,py=(ny-r.top)/r.height-.5;
+        neig.style.setProperty('--ry',(px*7)+'deg');neig.style.setProperty('--rx',(10-py*5)+'deg');
+      });
+    });
+    tisch.addEventListener('pointerleave',()=>{neig.style.removeProperty('--ry');neig.style.removeProperty('--rx')});
+  }
+  punkteBauen();mq.matches?stapelZeige():zeige();
+})();
+if(matchMedia('(prefers-reduced-motion:reduce)').matches)document.querySelectorAll('.rahmen video').forEach(v=>v.pause());
+(()=>{
+  // Galerie-Lightbox
+  const lb=document.getElementById('lb');if(!lb)return;
+  const btns=[...document.querySelectorAll('.foto .auf')], img=document.getElementById('lb-img');
+  const T=document.getElementById('lb-t'),D=document.getElementById('lb-d'),Nn=document.getElementById('lb-n');
+  const bZu=lb.querySelector('.zu'),bV=lb.querySelector('.vor'),bW=lb.querySelector('.weiter');
+  let cur=0,opener=null;
+  const lade=i=>{const b=btns[(i+btns.length)%btns.length];if(b){const p=new Image();p.src=b.dataset.gross}};
+  function zeige(i,sofort){
+    cur=(i+btns.length)%btns.length;const b=btns[cur];
+    const setze=()=>{img.src=b.dataset.gross;img.alt=b.querySelector('img').alt;T.textContent=b.dataset.t;D.textContent=b.dataset.d;Nn.textContent=(cur+1)+' / '+btns.length;img.classList.remove('wechsel')};
+    if(sofort){setze()}else{img.classList.add('wechsel');setTimeout(setze,180)}
+    lade(cur+1);lade(cur-1);
+  }
+  function auf(i,von){opener=von;zeige(i,true);lb.classList.add('on');lb.setAttribute('aria-hidden','false');document.documentElement.classList.add('lb-offen');bZu.focus()}
+  function zu(){lb.classList.remove('on');lb.setAttribute('aria-hidden','true');document.documentElement.classList.remove('lb-offen');if(opener)opener.focus()}
+  btns.forEach((b,i)=>b.addEventListener('click',()=>auf(i,b)));
+  bZu.addEventListener('click',zu);
+  bV.addEventListener('click',()=>zeige(cur-1));bW.addEventListener('click',()=>zeige(cur+1));
+  lb.addEventListener('click',e=>{if(e.target===lb||e.target.tagName==='FIGURE')zu()});
+  // Capture + preventDefault: die Pfeiltasten blättern sonst gleichzeitig das Menübuch
+  document.addEventListener('keydown',e=>{
+    if(!lb.classList.contains('on'))return;
+    if(e.key==='Escape'){e.preventDefault();zu()}
+    else if(e.key==='ArrowRight'){e.preventDefault();if(!e.repeat)zeige(cur+1)}
+    else if(e.key==='ArrowLeft'){e.preventDefault();if(!e.repeat)zeige(cur-1)}
+    else if(e.key==='Tab'){const f=[bZu,bV,bW],k=f.indexOf(document.activeElement);e.preventDefault();f[(k+(e.shiftKey?-1:1)+f.length)%f.length].focus()}
+  },true);
+  let x0=null;
+  lb.addEventListener('pointerdown',e=>{x0=e.clientX});
+  lb.addEventListener('pointerup',e=>{if(x0===null)return;const dx=e.clientX-x0;x0=null;if(Math.abs(dx)>60)zeige(cur+(dx<0?1:-1))});
+})();
+(()=>{
+  // Telefon-Menü
+  const root=document.documentElement, b=document.getElementById('burger'), m=document.getElementById('mobil');
+  const set=o=>{root.classList.toggle('menue',o);b.setAttribute('aria-expanded',o)};
+  b.addEventListener('click',()=>set(!root.classList.contains('menue')));
+  m.addEventListener('click',e=>{if(e.target.closest('a'))set(false)});
+  addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
+  matchMedia('(min-width:821px)').addEventListener('change',e=>{if(e.matches)set(false)});
+})();
+</script>
+</body>
+</html>

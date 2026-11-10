@@ -1,0 +1,45 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Karte messen</title>
+<!-- Wird von karte/messen.mjs mit headless Chrome geöffnet: misst die echten Höhen aller Zeilen (Einheit u = 1 % Seitenbreite). -->
+<pre id="out">wait</pre>
+<iframe id="f" src="../index.html" style="position:absolute;left:0;top:0;width:1440px;height:900px;opacity:0;pointer-events:none"></iframe>
+<script>
+f.onload = async () => {
+  const d = f.contentDocument;
+  await d.fonts.ready;
+  await new Promise((r) => setTimeout(r, 2500));
+  const norm = (s) => s.replace(/\s+/g, ' ').trim();
+  const items = {}, res = { items, cap: {}, slack: [] };
+  const pages = [...d.querySelectorAll('.buch .seite.dicht')];
+  let gm = [], km = [];
+  pages.forEach((s) => {
+    const W = s.offsetWidth, u = (px) => +(px / W * 100).toFixed(2);
+    res.W = W;
+    const l = s.querySelector('.liste'), folio = s.querySelector('.folio');
+    if (!l) { res.slack.push(null); return; }
+    const cs = getComputedStyle(l);
+    res.gap = u(parseFloat(cs.rowGap));
+    const limit = folio.offsetTop - 0.8 * W / 100; // 0,8 u Luft über dem Logo
+    const start = l.offsetTop + parseFloat(cs.paddingTop);
+    const key = s.querySelector('.ill') ? 'ill' : s.classList.contains('fort') ? 'cont' : 'plain';
+    res.cap[key] = u(limit - start);
+    [...l.children].forEach((c, i) => {
+      const m = getComputedStyle(c), h = c.offsetHeight;
+      let k;
+      if (c.classList.contains('pos')) k = 'p|' + norm(c.querySelector('.n').textContent) + '|' + norm(c.querySelector('.p').textContent);
+      else if (c.classList.contains('gruppe')) { k = 'g|' + norm(c.textContent); if (i) gm.push(u(parseFloat(m.marginTop) + parseFloat(m.marginBottom))); }
+      else if (c.classList.contains('kapitel')) { k = 'k|' + norm(c.querySelector('h3').textContent); km.push(u(parseFloat(m.marginTop) + parseFloat(m.marginBottom))); }
+      else k = 'h|' + norm(c.textContent);
+      items[k] = u(h);
+    });
+    const last = l.lastElementChild;
+    res.slack.push(last ? u(limit - (last.offsetTop + last.offsetHeight)) : null);
+  });
+  const avg = (a) => +(a.reduce((x, y) => x + y, 0) / (a.length || 1)).toFixed(2);
+  res.gMargin = avg(gm); res.kMargin = avg(km);
+  const gs = Object.entries(items).filter(([k]) => k.startsWith('g|')).map(([, v]) => v);
+  res.gAvg = avg(gs);
+  document.getElementById('out').textContent = JSON.stringify(res);
+};
+</script>
