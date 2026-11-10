@@ -1,0 +1,10 @@
+{
+  // Cloudflare Workers (static assets): site static, fără build.
+  // Build command: gol. Deploy command: npx wrangler deploy
+  "name": "opera",
+  "compatibility_date": "2026-10-18",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./"
+  }
+}

@@ -1,0 +1,10 @@
+# Nu se publică (în afară de site): sursele meniului, documentația și configurările
+.git
+.gitignore
+.assetsignore
+wrangler.jsonc
+README.md
+karte
+index.src.html
+node_modules
+.wrangler
