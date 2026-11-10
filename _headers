@@ -1,0 +1,20 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Robots-Tag: noindex, nofollow
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/art/*
+  Cache-Control: public, max-age=604800
+/foto/*
+  Cache-Control: public, max-age=604800
+/logo/*
+  Cache-Control: public, max-age=604800
+/video/*
+  Cache-Control: public, max-age=604800
+/hero.webp
+  Cache-Control: public, max-age=604800
+/hero-mobil.webp
+  Cache-Control: public, max-age=604800

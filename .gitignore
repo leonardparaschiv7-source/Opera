@@ -19,3 +19,7 @@ video/orata.jpg
 karte/*-patch.py
 karte/ungenutzt.py
 karte/index.src.ORIGINAL.html
+
+# Înlocuite de hero.webp / hero-mobil.webp
+hero.jpg
+hero-mobil.jpg

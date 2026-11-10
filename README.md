@@ -24,3 +24,12 @@ node karte/build.mjs
 ```
 
 `index.src.html` și `index.html` sunt identice; `index.html` este fișierul publicat.
+
+## Publicare pe Cloudflare Pages
+
+Site static, fără build: **Framework preset** `None`, **Build command** gol, **Build output directory** `/` (rădăcina depozitului).
+`_headers` setează cache-ul pentru imagini/video.
+
+> **Demo fără domeniu:** pagina are `noindex` (în `index.html`, în `_headers` ca `X-Robots-Tag` și în `index.src.html`).
+> Înainte de lansarea pe un domeniu real, scoate `<meta name="robots" ...>` din `index.src.html`, linia `X-Robots-Tag` din `_headers`,
+> rulează `node karte/build.mjs` și completează `og:url`/`og:image` și `url` în datele JSON-LD cu adresa reală.

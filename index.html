@@ -6,7 +6,16 @@
 <title>Opera Pforzheim</title>
 <meta name="description" content="Opera, Restaurant und Pizzeria in Pforzheim: italienische Küche, Pasta, Pizza, Fleisch und Fisch in der Altstadt. Jetzt Tisch reservieren.">
 <meta name="theme-color" content="#080808">
-<link rel="icon" type="image/webp" href="logo/opera-nav.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="robots" content="noindex, nofollow"><!-- Demo ohne Domain: vor dem Livegang entfernen (auch X-Robots-Tag in _headers) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Opera Pforzheim">
+<meta property="og:description" content="Opera, Restaurant und Pizzeria in Pforzheim: italienische Küche, Pasta, Pizza, Fleisch und Fisch in der Altstadt. Jetzt Tisch reservieren.">
+<meta property="og:locale" content="de_DE">
+<link rel="preload" as="image" href="hero.webp" media="(min-width:721px)" fetchpriority="high">
+<link rel="preload" as="image" href="hero-mobil.webp" media="(max-width:720px)" fetchpriority="high">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Restaurant", "name": "Opera", "servesCuisine": ["Italienisch", "Pizza", "Pasta"], "address": {"@type": "PostalAddress", "streetAddress": "Altstädter Kirchenweg 3", "postalCode": "75175", "addressLocality": "Pforzheim", "addressCountry": "DE"}, "telephone": "+4972312039962", "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday"], "opens": "17:00", "closes": "22:30"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "17:00", "closes": "23:59"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "11:30", "closes": "23:59"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "11:30", "closes": "22:30"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
@@ -53,7 +62,7 @@ h2{font-size:clamp(2.4rem,5.5vw,4.4rem)}
 
 /* Hero mit Vorhang */
 .hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;padding:120px var(--rand) 80px;
-  background:var(--nacht) url(hero.jpg) center/cover no-repeat}
+  background:var(--nacht) url(hero.webp) center/cover no-repeat}
 .hero .buehne{position:relative;z-index:1;max-width:900px}
 .hero .logo{width:min(560px,78vw);margin:0 auto;filter:drop-shadow(0 20px 60px rgba(201,162,74,.28))}
 .hero h1{font-size:clamp(2rem,4.6vw,3.6rem);font-style:italic;font-weight:400;margin:28px auto 14px;max-width:18ch;color:var(--elfenbein)}
@@ -144,7 +153,7 @@ html.menue .burger span:last-child{top:23.5px;transform:rotate(-45deg)}
 
 /* Hero auf dem Telefon: Hochformat-Foto, Text mittig und lesbar */
 @media(max-width:720px){
-  .hero{background-image:url(hero-mobil.jpg);background-position:center 28%;place-items:end center;text-align:center;padding:110px 22px calc(34px + env(safe-area-inset-bottom))}
+  .hero{background-image:url(hero-mobil.webp);background-position:center 28%;place-items:end center;text-align:center;padding:110px 22px calc(34px + env(safe-area-inset-bottom))}
   .hero::before{height:170px}
   .hero::after{height:80%;background:linear-gradient(180deg,rgba(6,6,6,0) 0%,rgba(6,6,6,.5) 26%,rgba(6,6,6,.85) 58%,rgba(6,6,6,.96) 100%)}
   .hero .buehne{max-width:none;width:100%;text-align:center}
@@ -769,7 +778,7 @@ footer .klein span{margin-right:auto}
 
 <section id="haus">
   <div class="schmal haus">
-    <div class="bild"><div class="rahmen"><video autoplay muted loop playsinline preload="metadata" poster="video/orata-hoch.jpg" width="810" height="1440" aria-hidden="true"><source src="video/orata-hoch.mp4" type="video/mp4"></video></div></div>
+    <div class="bild"><div class="rahmen"><video muted loop playsinline preload="none" poster="video/orata-hoch.jpg" width="810" height="1440" aria-hidden="true"><source src="video/orata-hoch.mp4" type="video/mp4"></video></div></div>
     <div>
       <h2>Die Bühne <span class="gold">ist bereitet.</span></h2>
       <p>Entdecken Sie im Opera italienische Klassiker von Antipasti und Pizza bis zu feinen Fischgerichten. Ob Dinner zu zweit, Familienfeier oder Geschäftsessen – wir freuen uns auf Ihren Besuch.</p>
@@ -1075,6 +1084,12 @@ if(matchMedia('(prefers-reduced-motion:reduce)').matches)document.querySelectorA
   let x0=null;
   lb.addEventListener('pointerdown',e=>{x0=e.clientX});
   lb.addEventListener('pointerup',e=>{if(x0===null)return;const dx=e.clientX-x0;x0=null;if(Math.abs(dx)>60)zeige(cur+(dx<0?1:-1))});
+})();
+(()=>{
+  // Video im Bereich "Die Bühne": erst nahe am Bildschirm laden und abspielen, außerhalb pausieren
+  const v=document.querySelector('.rahmen video');if(!v)return;
+  const ruhig=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!ruhig)v.play().catch(()=>{})}else v.pause()}),{rootMargin:'250px'}).observe(v);
 })();
 (()=>{
   // Telefon-Menü
